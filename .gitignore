@@ -1,0 +1,15 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# Node (only used by one-off tooling, not by the site)
+node_modules/
+npm-debug.log*
+
+# Impeccable runtime state (shared files stay untracked by choice)
+.impeccable/
+
+# Agent scratch space
+.agentsession/

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Stark Industries icon">
+  <g transform="translate(25 25) scale(2.1)"><g>
+  <path d="M100 8L188 40V112C188 160 150 196 100 214C50 196 12 160 12 112V40Z" fill="#141414"/>
+  <path d="M100 21L175 48V112C175 152 143 184 100 200C57 184 25 152 25 112V48Z" fill="none" stroke="#F2E8D5" stroke-width="2" opacity=".55"/>
+  <path d="M117.75 112.97L155.43 132.96L114.65 120.45Z" fill="#F2E8D5"/>
+  <path d="M110.45 124.65L118.37 154.35L102.97 127.75Z" fill="#F2B705"/>
+  <path d="M97.03 127.75L77.04 165.43L89.55 124.65Z" fill="#F2E8D5"/>
+  <path d="M85.35 120.45L55.65 128.37L82.25 112.97Z" fill="#F2B705"/>
+  <path d="M82.25 107.03L44.57 87.04L85.35 99.55Z" fill="#F2E8D5"/>
+  <path d="M89.55 95.35L81.63 65.65L97.03 92.25Z" fill="#F2B705"/>
+  <path d="M102.97 92.25L122.96 54.57L110.45 95.35Z" fill="#F2E8D5"/>
+  <path d="M114.65 99.55L144.35 91.63L117.75 107.03Z" fill="#F2B705"/>
+  <circle cx="100" cy="110" r="21" fill="#F2E8D5"/>
+  <circle cx="100" cy="110" r="8" fill="#D7261E"/>
+</g></g>
+</svg>
