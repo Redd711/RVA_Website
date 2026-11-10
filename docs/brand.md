@@ -9,8 +9,8 @@ The sun is the constant. In **Habing Lahi** it sits inside a woven ring, calm an
 open. In **Bantay Lahi** the same sun sits inside a shield, guarded. The group
 can switch themes without losing recognition.
 
-Both marks use the same eight-ray sun, the same three stars, and the same
-five-surname tagline. Only the container, the palette, and the type change.
+Both marks use the same eight-ray sun and the same five-surname tagline. Only
+the container, the palette, and the type change.
 
 ## Logo files
 
@@ -39,7 +39,7 @@ space is roughly 168 px on every side.
 
 - Horizontal lockup: 240 px wide (72 mm in print).
 - Square icon: 32 px.
-- Badge: 160 px wide.
+- Badge: 240 px wide.
 
 Below 600 px, the horizontal lockup's tagline becomes hard to read. Use the icon
 in the site header and move the full lockup to the footer or the about page.
@@ -171,5 +171,5 @@ Use **Habing Lahi** for the Cultural Heritage build. Use **Bantay Lahi** for the
 Advocacy build. If the site mixes both, keep Habing Lahi as the master brand and
 use Bantay Lahi as the campaign mark inside advocacy sections.
 
-The pair shares the sun, the ring, and the tagline, so the switch reads as a
-change of tone, not a change of identity.
+The pair shares the sun and the tagline, so the switch reads as a change of
+tone, not a change of identity.
