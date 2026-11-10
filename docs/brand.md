@@ -55,8 +55,8 @@ in the site header and move the full lockup to the footer or the about page.
 ### Dark surfaces
 
 The supplied lockups are built for light backgrounds. A reversed version is not
-yet supplied. On dark surfaces, use the square icon, or commission a reversed
-lockup before the site ships.
+yet supplied. On dark surfaces, place the square icon on a light chip, or
+commission a reversed lockup before the site ships.
 
 ## Color
 
