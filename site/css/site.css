@@ -156,28 +156,63 @@ section { padding-block: var(--pad-y); }
 .chip[aria-pressed="true"] { background: var(--palay-soft); color: var(--gabi); border-color: transparent; }
 .chip:active { transform: scale(.97); }
 
-/* ---------- page hero (inner pages) ---------- */
-.page-hero {
-  min-height: 78svh; display: grid; align-items: end;
-  padding-top: 140px; position: relative; overflow: hidden;
+/* ---------- the voxel heroes (Traditions, Arts, Members): words standing in the world ---------- */
+.vhero { position: relative; height: 100svh; min-height: 600px; padding: 0; overflow: hidden; color: var(--banig);
+  background: linear-gradient(#1b2742, #46557a 34%, #e7c18f 56%, #93b060 56%); }
+.vhero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* the indigo shade behind the title, as on the Overview (DESIGN.md 3.5), so the plain line reads on any sky */
+.vhero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(90% 60% at 0% 0%, rgb(27 39 66 / .62), rgb(27 39 66 / 0) 62%); }
+/* in a town corner, or with one of the five picked, that one leads; the page's line steps back */
+:is(.town, .shore)[data-here]:not([data-here=""]) :is(.vhero__motto, .vhero__cue) { visibility: hidden; }
+.vhero__panel[hidden] { display: none; }
+/* the plain line, as on the Overview: on the sky, or sat on the voxel word's corner by script */
+.vhero__motto { position: absolute; z-index: 2; left: max(var(--edge), (100% - var(--wrap)) / 2); top: 124px; margin: 0;
+  max-width: calc(100% - 2 * var(--edge)); font: 500 clamp(1.05rem, 1.7vw, 1.5rem)/1.25 var(--f-text); letter-spacing: .08em;
+  color: var(--banig); text-shadow: 0 1px 14px rgb(27 39 66 / .55); }
+.vhero__panel { position: absolute; z-index: 3; left: max(var(--edge), (100% - var(--wrap)) / 2); bottom: 48px; width: min(480px, 100% - 2 * var(--edge));
+  display: grid; gap: 14px; padding: 26px 30px 28px; border-radius: var(--r-m);
+  box-shadow: inset 0 0 0 1px rgb(246 238 223 / .1), var(--shadow-dark); }
+.vhero__panel > p { color: var(--hamog); font-size: 1.125rem; line-height: 1.5; font-weight: 500; }
+.vhero__panel > .vhero__meta { color: var(--palay); font-size: var(--t-small); }
+.vhero__name { font-size: var(--t-2); }
+.vhero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 4px; }
+button.link { border: 0; padding: 10px 0; font: inherit; font-weight: 500; cursor: pointer; }
+/* clear buttons over the scene: a sign in the town, a museum on the plaza */
+.vhero__pin { position: absolute; z-index: 2; padding: 0; border: 0; border-radius: var(--r-s); background: none; cursor: pointer;
+  transition: box-shadow var(--d-fast); }
+.vhero__pin:hover, .vhero__pin[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--palay), 0 0 28px rgb(217 174 95 / .35); }
+.vhero__pin:focus-visible { outline: 2px solid var(--palay); outline-offset: 3px; }
+.vhero:not(.is-live) .vhero__pin { display: none; }
+.vhero__cue { position: absolute; z-index: 2; left: 50%; bottom: 24px; translate: -50% 0; display: grid; justify-items: center; gap: 10px;
+  padding: 8px 12px; font-size: var(--t-label); letter-spacing: .04em; color: var(--banig); text-decoration: none; text-shadow: 0 1px 10px rgb(27 39 66 / .7); }
+.vhero__cue span { width: 1px; height: 40px; background: linear-gradient(var(--palay), transparent); transform-origin: top; animation: cue 2.4s var(--ease-inout) infinite; }
+.town__list { display: none; }
+.town.is-still .town__list { display: flex; flex-wrap: wrap; gap: 0 18px; list-style: none; margin: 0; padding: 0; }
+.plaza__tag { position: absolute; left: 50%; top: -10px; translate: -50% -90%; white-space: nowrap; pointer-events: none;
+  padding: 6px 12px; border-radius: var(--r-s); background: rgb(27 39 66 / .88); color: var(--banig); font-size: var(--t-label); font-weight: 500;
+  opacity: 0; transition: opacity var(--d-fast), translate var(--d-fast) var(--ease-out); }
+.plaza__door:hover .plaza__tag, .plaza__door:focus-visible .plaza__tag { opacity: 1; translate: -50% -100%; }
+@media (max-width: 767px) {
+  /* a phone shows the town small: its signs become a row of name chips in the sky above it */
+  .town .town__pins { position: absolute; z-index: 2; left: var(--edge); right: var(--edge); top: 184px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .town .town__pin { position: static; width: auto !important; height: auto !important; min-height: 44px; padding: 0 12px;
+    background: rgb(27 39 66 / .8); color: var(--banig); font-size: var(--t-label); font-weight: 500; box-shadow: inset 0 0 0 1px rgb(246 238 223 / .14); }
+  .town .town__pin .visually-hidden { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
+  .vhero__panel { bottom: calc(84px + env(safe-area-inset-bottom)); padding: 20px 22px 22px; }
+  .vhero__panel > p { font-size: 1rem; }
+  .vhero__cue { bottom: calc(80px + env(safe-area-inset-bottom)); }
 }
-.page-hero h1 {
-  font-size: var(--t-hero); line-height: .92; letter-spacing: -.02em; font-weight: 500;
-}
-.page-hero .lead { margin-top: 20px; color: var(--hamog); }
-.page-hero__grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--gut); align-items: end; }
-.page-hero__photo {
-  border-radius: var(--r-m); overflow: hidden; aspect-ratio: 4 / 5; max-height: 62svh; justify-self: end; width: min(100%, 420px);
-  box-shadow: var(--shadow-dark);
-  transform: perspective(1200px) rotateY(-8deg) translateZ(0);
-  transition: transform var(--d-slow) var(--ease-out);
-}
-.page-hero__photo:hover { transform: perspective(1200px) rotateY(-3deg); }
-.page-hero__photo img { width: 100%; height: 100%; object-fit: cover; }
-.threadline { position: absolute; inset: auto 0 0; height: 1px; background: var(--palay); opacity: .45; }
-@media (max-width: 860px) {
-  .page-hero__grid { grid-template-columns: 1fr; }
-  .page-hero__photo { justify-self: start; aspect-ratio: 3 / 2; width: 100%; transform: none; }
+
+/* ---------- inner-page sections: as tall as what they hold, no empty screen under the cards ---------- */
+.screen { padding: clamp(96px, 12vh, 128px) 0 clamp(80px, 10vh, 112px); }
+.split-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 var(--gut); align-items: end; }
+.split-head h2 { grid-column: 1 / 7; }
+.split-head > p { grid-column: 7 / -1; max-width: 46ch; }
+@media (max-width: 899px) {
+  .split-head { grid-template-columns: 1fr; }
+  .split-head > * { grid-column: 1 / -1; }
+  .split-head > p { margin-top: 12px; }
 }
 
 /* ---------- statement ---------- */
@@ -224,25 +259,28 @@ section { padding-block: var(--pad-y); }
   .year__line { display: none; }
 }
 
-.fest { display: grid; grid-template-columns: 7fr 5fr; gap: calc(var(--gut) * 2); align-items: center; padding-block: 72px; border-top: 1px solid rgb(34 48 79 / .1); }
-.fest:nth-of-type(even) { grid-template-columns: 5fr 7fr; }
-.fest:nth-of-type(even) .fest__media { order: 2; }
-.fest__media { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
-.fest__media .main { grid-row: span 2; }
+.screen .year { margin-top: 28px; padding-top: 0; }
+.screen .year__line { top: 45px; }
+
 .frame { border-radius: var(--r-m); overflow: hidden; box-shadow: var(--shadow-2); }
 .frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
 .frame:hover img { transform: scale(1.03); }
-.fest__media .main { aspect-ratio: 3 / 2; }
-.fest__media .side { aspect-ratio: 1; }
-.fest__media.single { grid-template-columns: 1fr; }
-.fest__when { display: flex; gap: 12px; align-items: baseline; color: var(--luad); font-weight: 500; margin-bottom: 10px; font-variant-numeric: tabular-nums; }
-.fest__when b { font: 600 2.6rem/1 var(--f-display); color: var(--tinta); }
-.fest h3 { margin-bottom: 14px; }
-.fest p + p { margin-top: .8em; }
-@media (max-width: 860px) {
-  .fest, .fest:nth-of-type(even) { grid-template-columns: 1fr; }
-  .fest:nth-of-type(even) .fest__media { order: 0; }
+/* the four festivals under the year, and the two places */
+.fest-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gut); margin-top: 36px; }
+.fest-card { display: grid; gap: 8px; align-content: start; }
+.fest-card .frame { aspect-ratio: 3 / 2; margin-bottom: 8px; }
+.fest-card h3 { font-size: 1.7rem; }
+.fest-card p { font-size: var(--t-small); line-height: 1.55; }
+.fest-card__meta { color: var(--luad); font-weight: 500; }
+.dark .fest-card__meta { color: var(--palay); }
+.place-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gut); margin-top: 40px; }
+.place-pair .frame { box-shadow: var(--shadow-dark); }
+.place-pair p { font-size: var(--t-body); max-width: 56ch; }
+@media (max-width: 899px) {
+  .fest-cards { grid-template-columns: 1fr 1fr; }
+  .place-pair { grid-template-columns: 1fr; }
 }
+@media (max-width: 520px) { .fest-cards { grid-template-columns: 1fr; } }
 
 /* ---------- arts: gallery wall ---------- */
 .wall { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gut); margin-top: 40px; perspective: 1600px; }
@@ -294,6 +332,75 @@ section { padding-block: var(--pad-y); }
 .viewer dd { margin: 0; font-weight: 500; }
 @media (max-width: 760px) { .viewer__grid { grid-template-columns: 1fr; } .viewer__grid img { max-height: 42svh; } .viewer__body { padding: 24px 22px 28px; } }
 
+/* ---------- arts: the hall, a dark gallery that slides sideways as you scroll down ---------- */
+/* one screen held, plus four fifths of a screen of scroll for each step to the next piece */
+.hall { --pieces: 6; height: calc((1 + (var(--pieces) - 1) * .8) * 100svh); padding: 0; position: relative; }
+.hall__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; background: radial-gradient(120% 90% at 50% 0%, #26304d, #141a2b 70%); }
+.hall__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hall__head { position: absolute; left: 0; right: 0; top: 104px; z-index: 2; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 32px;
+  transition: opacity var(--d-base) var(--ease-out), visibility 0s; }
+/* once the walk through the hall begins, its title and museum chips step aside for the pieces */
+.hall.is-walking .hall__head { opacity: 0; visibility: hidden; transition: opacity var(--d-base) var(--ease-out), visibility 0s var(--d-base); }
+.hall__head h2 { font-size: var(--t-2); }
+.hall__head p { margin-top: 6px; }
+.hall__wings { display: flex; gap: 8px; }
+.hall__wings .chip { text-decoration: none; }
+.hall__wings .chip[aria-current] { background: var(--palay-soft); color: var(--gabi); border-color: transparent; }
+.hall__pieces { list-style: none; margin: 0; padding: 0; }
+.hall__piece { position: absolute; z-index: 1; padding: 0; border: 0; border-radius: var(--r-s); background: none; color: inherit; cursor: zoom-in; }
+.hall__piece span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.hall__piece:focus-visible { outline: 2px solid var(--palay); outline-offset: 4px; }
+.hall:not(.is-live) .hall__piece { display: none; }
+.hall__foot { position: absolute; left: 0; right: 0; bottom: 40px; z-index: 2; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 24px; }
+.hall__placard { max-width: 520px; padding: 16px 22px 18px; border-radius: var(--r-m); background: rgb(20 26 43 / .82);
+  box-shadow: inset 0 0 0 1px rgb(246 238 223 / .08); }
+.hall__count { color: var(--palay); font-size: var(--t-small); font-weight: 500; font-variant-numeric: tabular-nums; }
+.hall__placard h3 { margin: 2px 0 4px; }
+@media (max-width: 767px) {
+  .hall__head { top: 84px; }
+  .hall__head p { display: none; }
+  .hall__foot { bottom: calc(84px + env(safe-area-inset-bottom)); }
+  .hall__placard { padding: 12px 16px 14px; }
+}
+/* without WebGL the hall is a plain list of the pieces, each still opening its label and photograph */
+.hall.is-still { height: auto; }
+.hall.is-still .hall__stage { position: relative; height: auto; padding: 200px 0 120px; }
+.hall.is-still .hall__head { top: 110px; }
+.hall.is-still .hall__pieces { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gut); width: min(var(--wrap), 100% - 2 * var(--edge)); margin: 0 auto; }
+.hall.is-still .hall__piece { position: static; display: block; width: 100%; min-height: 72px; padding: 18px; border-radius: var(--r-m);
+  background: var(--gabi-2); font: 600 1.5rem/1.1 var(--f-display); text-align: left; }
+.hall.is-still .hall__piece span { position: static; width: auto; height: auto; clip-path: none; }
+.hall.is-still .hall__foot { display: none; }
+
+/* ---------- arts: the piece viewer, a museum label beside the piece ---------- */
+.piece { width: min(1080px, 100% - 32px); }
+.piece .viewer__grid { min-height: min(620px, 100svh - 48px); }
+.piece__stage { position: relative; min-height: 420px; overflow: hidden; background: radial-gradient(120% 80% at 50% 0%, #2c3c66, var(--gabi) 70%); }
+.piece__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: pan-y; }
+.piece__stage canvas:active { cursor: grabbing; }
+.viewer__grid .piece__photo { position: absolute; inset: 0; width: 100%; height: 100%; max-height: none; object-fit: cover; opacity: 0; pointer-events: none; transition: opacity var(--d-base) var(--ease-out); }
+.piece__stage.is-photo .piece__photo { opacity: 1; }
+.piece__hint { position: absolute; top: 16px; left: 20px; margin: 0; font-size: var(--t-label); color: var(--hamog); pointer-events: none; transition: opacity var(--d-base); }
+.piece__stage.is-photo .piece__hint { opacity: 0; }
+.piece__swap { position: absolute; left: 16px; bottom: 16px; display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 14px 6px 6px;
+  border: 0; border-radius: var(--r-s); background: rgb(27 39 66 / .84); color: var(--banig); font-size: var(--t-small); font-weight: 500; cursor: pointer;
+  transition: background-color var(--d-fast), transform var(--d-fast) var(--ease-out); }
+.piece__swap:hover { background: rgb(38 52 90 / .94); }
+.piece__swap:active { transform: scale(.98); }
+.viewer__grid .piece__swap img { width: 72px; height: 48px; max-height: none; border-radius: 4px; object-fit: cover; }
+.piece__label { align-content: start; gap: 8px; }
+.piece__label h2 { font-size: var(--t-1); }
+.label__wing { color: var(--luad); font-size: var(--t-small); font-weight: 500; }
+.label__maker { font-weight: 500; }
+.label__medium { font: italic 600 1.2rem/1.35 var(--f-display); }
+.label__date { color: var(--ambon); font-size: var(--t-small); }
+.label__note { display: grid; gap: .8em; margin-top: 10px; padding-top: 18px; border-top: 1px solid rgb(34 48 79 / .14); }
+@media (max-width: 760px) { .piece__stage { min-height: 44svh; } }
+
+.story-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gut); margin-top: 40px; }
+.story-pair .story-card__img { aspect-ratio: 3 / 2; }
+@media (max-width: 899px) { .story-pair { grid-template-columns: 1fr; } }
+
 /* ---------- members: threads ---------- */
 .loom { position: relative; margin-top: 56px; display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--gut); }
 .thread {
@@ -333,10 +440,15 @@ section { padding-block: var(--pad-y); }
   .mono { width: 64px; height: 64px; font-size: 1.6rem; grid-row: span 2; }
   .weft { position: static; letter-spacing: .12em; margin-top: 8px; }
 }
-.project { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--gut) * 2); align-items: center; }
+.screen .loom { margin-top: 40px; }
+.screen .thread { min-height: 440px; }
+.screen .weft { top: 300px; }
+.why { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gut); align-items: start; }
+.why .prose { grid-column: 1 / 7; }
+.why .lockup { grid-column: 7 / -1; align-self: center; }
 .lockup { background: var(--banig); border-radius: var(--r-m); padding: clamp(24px, 5vw, 64px); box-shadow: var(--shadow-1); }
 .lockup img { width: 100%; min-width: 240px; }
-@media (max-width: 860px) { .project { grid-template-columns: 1fr; } }
+@media (max-width: 899px) { .why { grid-template-columns: 1fr; } .why > * { grid-column: 1 / -1 !important; } }
 
 /* ---------- footer ---------- */
 .site-foot { padding-block: 72px 40px; border-top: 1px solid rgb(34 48 79 / .1); }

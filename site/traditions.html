@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tradisyon — Habing Lahi</title>
-<meta name="description" content="Filipino festivals and living heritage places, laid out across the calendar year: Sinulog, Ati-Atihan, Pahiyas, Kadayawan, Banaue and Vigan.">
+<meta name="description" content="Filipino festivals and living heritage places in one voxel festival town: Sinulog, Ati-Atihan, Pahiyas, Kadayawan, Calle Crisologo and Banaue, then the festival year month by month.">
 <meta name="theme-color" content="#1b2742">
 <link rel="icon" href="assets/logos/heritage-icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
+<link rel="modulepreload" href="js/vendor/three.core.js">
+<link rel="modulepreload" href="js/vendor/three.module.min.js">
 <script src="js/site.js" defer></script>
+<script type="module" src="js/traditions.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -33,21 +36,76 @@
 
 <main id="main">
 
-<section class="page-hero dark" aria-labelledby="t-title">
-  <div class="wrap page-hero__grid">
-    <div>
-      <h1 id="t-title" class="reveal" style="--delay:100ms"><span lang="fil">Tradisyon</span></h1>
-      <p class="lead reveal" style="--delay:250ms">Festivals and practices, month by month. Each one belongs to a town, and each town keeps it in public, on its streets and plazas.</p>
-    </div>
-    <div class="page-hero__photo reveal" style="--delay:350ms"><img src="assets/img/photo-f150613367-960.webp" alt="House façade covered in bright leaf-shaped kiping decorations for Pahiyas in Lucban" width="960" height="722" fetchpriority="high"></div>
+<section class="vhero town" aria-labelledby="t-title">
+  <canvas aria-hidden="true"></canvas>
+  <h1 id="t-title" class="vhero__motto reveal" style="--delay:200ms">Festivals and practices, month by month.<span class="visually-hidden"> <span lang="fil">Tradisyon</span>.</span></h1>
+
+  <div class="town__pins" role="group" aria-label="Traditions in the town">
+    <button class="vhero__pin town__pin" type="button" data-corner="sinulog" aria-pressed="false"><span class="visually-hidden">Sinulog, Cebu City</span></button>
+    <button class="vhero__pin town__pin" type="button" data-corner="ati-atihan" aria-pressed="false"><span class="visually-hidden">Ati-Atihan, Kalibo</span></button>
+    <button class="vhero__pin town__pin" type="button" data-corner="pahiyas" aria-pressed="false"><span class="visually-hidden">Pahiyas, Lucban</span></button>
+    <button class="vhero__pin town__pin" type="button" data-corner="kadayawan" aria-pressed="false"><span class="visually-hidden">Kadayawan, Davao City</span></button>
+    <button class="vhero__pin town__pin" type="button" data-corner="vigan" aria-pressed="false"><span class="visually-hidden">Calle Crisologo, Vigan</span></button>
+    <button class="vhero__pin town__pin" type="button" data-corner="terraces" aria-pressed="false"><span class="visually-hidden">Rice terraces, Banaue</span></button>
   </div>
-  <span class="threadline" aria-hidden="true"></span>
+
+  <div class="vhero__panel town__panel dark reveal" style="--delay:350ms" aria-live="polite">
+    <p>Each festival belongs to a town, and each town keeps it in public, on its streets and plazas. Pick a name to fly in.</p>
+    <div class="vhero__actions"><a class="btn" href="#year">See the festival year</a></div>
+    <ul class="town__list">
+      <li><a class="link" href="#sinulog">Sinulog</a></li><li><a class="link" href="#ati-atihan">Ati-Atihan</a></li><li><a class="link" href="#pahiyas">Pahiyas</a></li>
+      <li><a class="link" href="#kadayawan">Kadayawan</a></li><li><a class="link" href="#vigan">Calle Crisologo</a></li><li><a class="link" href="#terraces">Banaue</a></li>
+    </ul>
+  </div>
+
+  <template data-panel="town">
+    <p>Each festival belongs to a town, and each town keeps it in public, on its streets and plazas. Pick a name to fly in.</p>
+    <div class="vhero__actions"><a class="btn" href="#year">See the festival year</a></div>
+  </template>
+  <template data-panel="sinulog">
+    <p class="vhero__meta">Cebu City, the third Sunday of January</p>
+    <h2 class="vhero__name">Sinulog</h2>
+    <p>The procession for the Santo Niño and the street dance happen on the same weekend, to one steady drum.</p>
+    <div class="vhero__actions"><a class="btn" href="#sinulog">See it in the festival year</a><button class="link" type="button" data-back>Back to the town</button></div>
+  </template>
+  <template data-panel="ati-atihan">
+    <p class="vhero__meta">Kalibo, Aklan, in January</p>
+    <h2 class="vhero__name">Ati-Atihan</h2>
+    <p>Dancers darken their faces with soot and wear costumes of shell, seed and feather, and the drums keep going for a week.</p>
+    <div class="vhero__actions"><a class="btn" href="#ati-atihan">See it in the festival year</a><button class="link" type="button" data-back>Back to the town</button></div>
+  </template>
+  <template data-panel="pahiyas">
+    <p class="vhero__meta">Lucban, Quezon, on 15 May</p>
+    <h2 class="vhero__name">Pahiyas</h2>
+    <p>The procession passes the dressed houses, and the town chooses the family with the best façade.</p>
+    <div class="vhero__actions"><a class="btn" href="#pahiyas">See it in the festival year</a><button class="link" type="button" data-back>Back to the town</button></div>
+  </template>
+  <template data-panel="kadayawan">
+    <p class="vhero__meta">Davao City, in August</p>
+    <h2 class="vhero__name">Kadayawan</h2>
+    <p>The street dance carries the dress, beadwork and steps of the city’s first communities, between stalls heavy with fruit.</p>
+    <div class="vhero__actions"><a class="btn" href="#kadayawan">See it in the festival year</a><button class="link" type="button" data-back>Back to the town</button></div>
+  </template>
+  <template data-panel="vigan">
+    <p class="vhero__meta">Vigan, Ilocos Sur, every day</p>
+    <h2 class="vhero__name">Calle Crisologo</h2>
+    <p>Vigan has been a UNESCO World Heritage city since 1999, and families still live and trade in these houses.</p>
+    <div class="vhero__actions"><a class="btn" href="#vigan">See it among the places</a><button class="link" type="button" data-back>Back to the town</button></div>
+  </template>
+  <template data-panel="terraces">
+    <p class="vhero__meta">Banaue, Ifugao, every season</p>
+    <h2 class="vhero__name">Rice terraces</h2>
+    <p>Water from the forest above is shared field by field, through channels each family helps to keep.</p>
+    <div class="vhero__actions"><a class="btn" href="#terraces">See it among the places</a><button class="link" type="button" data-back>Back to the town</button></div>
+  </template>
 </section>
 
-<section aria-labelledby="year-title">
+<section class="screen" id="year" aria-labelledby="year-title">
   <div class="wrap">
-    <h2 id="year-title">The festival year</h2>
-    <p class="lead muted" style="margin-top:16px">One thread from January to December. The filled knots are the months we document so far.</p>
+    <div class="split-head">
+      <h2 id="year-title">The festival year</h2>
+      <p class="lead muted">One thread from January to December. The filled knots are the months we document so far.</p>
+    </div>
     <div class="year" data-moment>
       <span class="year__line" aria-hidden="true"></span>
       <ol class="year__months">
@@ -65,75 +123,55 @@
         <li><span>Dec</span><span class="knot" aria-hidden="true"></span></li>
       </ol>
     </div>
-
-    <article class="fest" id="sinulog" style="margin-top:72px">
-      <div class="fest__media single"><div class="frame main"><img src="assets/img/photo-f130057264-960.webp" alt="Sinulog dancers in blue and gold costumes raising their arms around a dancer holding a Santo Niño image" width="960" height="640" loading="lazy"></div></div>
-      <div>
-        <p class="fest__when"><b>01</b> January, third Sunday · Cebu City</p>
+    <div class="fest-cards">
+      <article class="fest-card" id="sinulog">
+        <div class="frame"><img src="assets/img/photo-f130057264-960.webp" alt="Sinulog dancers in blue and gold costumes raising their arms around a dancer holding a Santo Niño image" width="960" height="640" loading="lazy"></div>
+        <p class="fest-card__meta">Cebu City, the third Sunday of January</p>
         <h3>Sinulog</h3>
-        <p>The name comes from the Cebuano word for the current of a river. Dancers move the way water does, two steps forward and one back, to a steady drum.</p>
-        <p class="muted">It honours the Santo Niño, the image of the child Jesus that has been kept in Cebu since the 1500s. The procession and the street dance happen on the same weekend.</p>
-      </div>
-    </article>
-
-    <article class="fest" id="ati-atihan">
-      <div class="fest__media single"><div class="frame main"><img src="assets/img/photo-f87187355-960.webp" alt="Ati-Atihan dancers in shell and feather headdresses, faces darkened with soot" width="960" height="640" loading="lazy"></div></div>
-      <div>
-        <p class="fest__when"><b>01</b> January · Kalibo, Aklan</p>
+        <p>Dancers move like a river’s current, two steps forward and one back, for the Santo Niño kept in Cebu since the 1500s.</p>
+      </article>
+      <article class="fest-card" id="ati-atihan">
+        <div class="frame"><img src="assets/img/photo-f87187355-960.webp" alt="Ati-Atihan dancers in shell and feather headdresses, faces darkened with soot" width="960" height="640" loading="lazy"></div>
+        <p class="fest-card__meta">Kalibo, Aklan, in January</p>
         <h3>Ati-Atihan</h3>
-        <p>Kalibo fills with drums for a week. Dancers darken their faces with soot and wear costumes of shell, seed and feather in honour of the Ati, the first people of Panay.</p>
-        <p class="muted">Anyone can join the street dance. That openness is the tradition: the festival belongs to whoever is dancing.</p>
-      </div>
-    </article>
-
-    <article class="fest" id="pahiyas">
-      <div class="fest__media single"><div class="frame main"><img src="assets/img/photo-f132777784-960.webp" alt="Crowds lining a Lucban street hung with harvest decorations as the Pahiyas parade passes" width="960" height="720" loading="lazy"></div></div>
-      <div>
-        <p class="fest__when"><b>05</b> 15 May · Lucban, Quezon</p>
+        <p>A week of drums for the Ati, the first people of Panay. Anyone can join the street dance, and that openness is the tradition.</p>
+      </article>
+      <article class="fest-card" id="pahiyas">
+        <div class="frame"><img src="assets/img/photo-f150613367-960.webp" alt="House façade covered in bright leaf-shaped kiping decorations for Pahiyas in Lucban" width="960" height="722" loading="lazy"></div>
+        <p class="fest-card__meta">Lucban, Quezon, on 15 May</p>
         <h3>Pahiyas</h3>
-        <p>Farmers give thanks to San Isidro Labrador by dressing their houses in the harvest: rice stalks, fruit, vegetables and <i lang="fil">kiping</i>, thin rice wafers pressed on leaves and dyed bright.</p>
-        <p class="muted">The procession passes the decorated houses, and the family with the best façade is chosen by the town.</p>
-        <p><a class="link" href="story-pahiyas.html">Read the full Pahiyas story</a></p>
-      </div>
-    </article>
-
-    <article class="fest" id="kadayawan">
-      <div class="fest__media single"><div class="frame main"><img src="assets/img/photo-f87436043-960.webp" alt="Young Kadayawan dancer in a beaded blue costume lifting a carved wooden prop, dancers in red behind him" width="960" height="640" loading="lazy"></div></div>
-      <div>
-        <p class="fest__when"><b>08</b> August · Davao City</p>
+        <p>Farmers thank San Isidro Labrador by dressing their houses in rice, fruit and <i lang="fil">kiping</i>, rice wafers dyed bright. <a class="link" href="story-pahiyas.html">Read the Pahiyas story</a></p>
+      </article>
+      <article class="fest-card" id="kadayawan">
+        <div class="frame"><img src="assets/img/photo-f87436043-960.webp" alt="Young Kadayawan dancer in a beaded blue costume lifting a carved wooden prop, dancers in red behind him" width="960" height="640" loading="lazy"></div>
+        <p class="fest-card__meta">Davao City, in August</p>
         <h3>Kadayawan</h3>
-        <p><i lang="fil">Kadayawan</i> comes from <i lang="fil">madayaw</i>, a greeting that means good, beautiful and valuable. Davao gives thanks for flowers, fruit and the harvest.</p>
-        <p class="muted">The street dance carries the dress, beadwork and steps of the eleven tribes of Davao City, so the city's first communities lead the parade.</p>
-      </div>
-    </article>
+        <p>From <i lang="fil">madayaw</i>, good and beautiful. Davao gives thanks for its harvest, and the city’s eleven tribes lead the parade.</p>
+      </article>
+    </div>
   </div>
 </section>
 
-<section class="dark" aria-labelledby="places-title">
+<section class="screen dark" aria-labelledby="places-title">
   <div class="wrap">
-    <h2 id="places-title">Places that are the tradition</h2>
-    <p class="lead muted" style="margin-top:16px">Some heritage has no date. It is a landscape or a street, kept every day by the people who live there.</p>
-
-    <article class="fest" id="terraces" style="border-color:rgb(246 238 223 / .1)">
-      <div class="fest__media single"><div class="frame main"><img src="assets/img/photo-f78907051-960.webp" alt="Stone-walled rice terraces stepping down a forested mountain in Banaue" width="960" height="640" loading="lazy"></div></div>
-      <div>
-        <p class="fest__when" style="color:var(--palay)">Every season · Banaue, Ifugao</p>
+    <div class="split-head">
+      <h2 id="places-title">Places that are the tradition</h2>
+      <p class="lead muted">Some heritage has no date. It is a landscape or a street, kept every day by the people who live there.</p>
+    </div>
+    <div class="place-pair">
+      <article class="fest-card" id="terraces">
+        <div class="frame"><img src="assets/img/photo-f78907051-960.webp" alt="Stone-walled rice terraces stepping down a forested mountain in Banaue" width="960" height="640" loading="lazy"></div>
+        <p class="fest-card__meta">Banaue, Ifugao, every season</p>
         <h3>Rice terraces of the Cordillera</h3>
-        <p>Ifugao families carved these terraces into the mountains by hand and still plant them. Water from the forest above is shared field by field, through channels each family helps to keep.</p>
-        <p class="muted">The terraces are listed by UNESCO, but their real keepers are the farmers. When young people leave, the walls start to fall.</p>
-      </div>
-    </article>
-
-    <article class="fest" id="vigan" style="border-color:rgb(246 238 223 / .1)">
-      <div class="fest__media single"><div class="frame main"><img src="assets/img/photo-f8265183-960.webp" alt="Two-storey Spanish-era stone house with wooden window shutters on a cobbled street in Vigan" width="960" height="722" loading="lazy"></div></div>
-      <div>
-        <p class="fest__when" style="color:var(--palay)">Every day · Vigan, Ilocos Sur</p>
+        <p class="muted">Ifugao families carved these terraces by hand and still plant them. When young people leave, the walls start to fall.</p>
+      </article>
+      <article class="fest-card" id="vigan">
+        <div class="frame"><img src="assets/img/photo-f8265183-960.webp" alt="Two-storey Spanish-era stone house with wooden window shutters on a cobbled street in Vigan" width="960" height="722" loading="lazy"></div>
+        <p class="fest-card__meta">Vigan, Ilocos Sur, every day</p>
         <h3>Calle Crisologo</h3>
-        <p>Brick ground floors, wooden upper floors and capiz-shell windows: houses built by Filipino, Chinese and Spanish hands in one street. Vigan has been a UNESCO World Heritage city since 1999.</p>
-        <p class="muted">Families still live and trade in these houses, and the potters of the nearby burnay workshops still fire jars the old way.</p>
-        <p><a class="link" href="story-burnay.html" style="color:var(--luad-soft)">Read the burnay story</a></p>
-      </div>
-    </article>
+        <p class="muted">Brick below, wood above, capiz in the windows: houses built by Filipino, Chinese and Spanish hands. <a class="link" href="story-burnay.html">Read the burnay story</a></p>
+      </article>
+    </div>
   </div>
 </section>
 

@@ -495,3 +495,184 @@ export function tnalak(x, z) {
   const d = (Math.abs(((x + 40) % 6) - 3) + Math.abs(((z + 40) % 6) - 3));
   return d === 3 ? C.cream : d === 1 ? C.red : 0x3a2a22;
 }
+
+// ---------------------------------------------------------------- the Arts page: museums and pieces
+const mod2 = (a, n) => ((a % n) + n) % n;
+const BRONZE = 0xb08a3a, BRONZE_DARK = 0x8a6a2c;
+
+// a gong in the x-y plane (it faces +z), its boss in the middle
+function gong(v, cx, cy, z, r, c = BRONZE) {
+  for (let x = -r; x <= r; x++) for (let y = -r; y <= r; y++) {
+    const d = Math.sqrt(x * x + y * y);
+    if (d > r + 0.3) continue;
+    v.set(cx + x, cy + y, z, d > r - 1 ? BRONZE_DARK : c);
+    if (d < r * 0.3) v.set(cx + x, cy + y, z + 1, 0xc9a24a);
+  }
+}
+
+// a neoclassical museum, its front facing +z: podium and steps, six columns, a frieze for the name
+// (y 26 to 33, front face at z = 4) and a pediment. kind dresses its front with its collection.
+export function museum(kind = 'textile') {
+  const v = new Vox();
+  const stone = (x, y, z) => (hash3(x, y, z) > 0.86 ? C.stoneDark : C.stone);
+  const wall = (x, y, z) => (hash3(x, y, z) > 0.9 ? 0xd2c6ae : 0xddd2bd);
+  v.box(-28, 0, -16, 28, 2, 6, stone);
+  v.box(-20, 0, 7, 20, 1, 9, stone);
+  v.box(-20, 0, 10, 20, 0, 12, stone);
+  v.box(-25, 3, -15, 25, 24, -4, wall);
+  v.box(-4, 3, -4, 4, 13, -4, 0x4a3424);
+  v.box(-5, 14, -4, 5, 14, -4, C.stoneDark);
+  for (const cx of [-22, -13, -4, 4, 13, 22]) {
+    v.cyl(cx, 1, 3, 3, 2.2, C.stoneDark);
+    v.cyl(cx, 1, 4, 22, 1.6, stone);
+    v.cyl(cx, 1, 23, 23, 2.2, C.stoneDark);
+  }
+  v.box(-27, 24, -16, 27, 25, 4, C.stoneDark);
+  v.box(-27, 26, -16, 27, 33, 4, stone);
+  v.box(-28, 34, -17, 28, 34, 5, C.stoneDark);
+  for (let i = 0; i <= 8; i++) { const r = Math.round(27 - i * 3.2); v.box(-r, 35 + i, -16, r, 35 + i, 4, i === 0 ? C.stoneDark : stone); }
+  if (kind === 'textile') {
+    // two t'nalak banners hang between the middle columns
+    for (const x0 of [-11, 6]) for (let x = x0; x <= x0 + 5; x++) for (let y = 8; y <= 22; y++) v.set(x, y, 0, y === 22 ? C.woodDark : tnalak(x, y));
+  } else if (kind === 'clay') {
+    // burnay jars on low plinths either side of the steps
+    for (const s of [-1, 1]) {
+      v.box(s * 25 - 3, 0, 9, s * 25 + 3, 2, 15, C.stoneDark);
+      v.lathe(s * 25, 12, 3, [2, 3, 3.6, 3.8, 3.6, 3, 2, 1.5, 2], (x, y, z) => (hash3(x, y, z) > 0.7 ? 0x6f4b3a : 0x7a5442), 7);
+    }
+  } else {
+    // a hanging agung on its stand beside the steps
+    for (const x of [19, 31]) v.box(x, 0, 12, x, 18, 12, C.woodDark);
+    v.box(19, 18, 12, 31, 18, 12, C.wood);
+    v.line(25, 17, 12, 25, 15, 12, 0x3a2a22);
+    gong(v, 25, 9, 13, 5);
+  }
+  return v;
+}
+
+// t'nalak hung like a tapestry from a rod; the hall shows it in the open
+export function tnalakHanging() {
+  const v = new Vox();
+  for (let x = -9; x <= 9; x++) v.set(x, 40, 0, C.woodDark);
+  for (let x = -7; x <= 7; x++) {
+    for (let y = 6; y <= 39; y++) v.set(x, y, 0, tnalak(x, y));
+    if (mod2(x, 2) === 0) for (let k = 1; k <= 3; k++) v.set(x, 6 - k, 0, k === 3 ? C.red : 0xe9dcc0);
+  }
+  return v;
+}
+
+// inabel folded over a wooden rail: red and saffron cotton in a tight diamond weave
+export function inabelBlanket() {
+  const v = new Vox();
+  for (const x of [-11, 11]) { v.box(x, 0, -1, x, 23, -1, C.woodDark); v.box(x - 1, 0, -3, x + 1, 0, 1, C.woodDark); }
+  for (let x = -12; x <= 12; x++) v.set(x, 23, -1, C.wood);
+  const weave = (x, y) => {
+    const d = Math.abs(mod2(x, 8) - 4) + Math.abs(mod2(y, 8) - 4);
+    return d === 4 ? 0xf1e9d8 : mod2(Math.floor(y / 4), 3) === 1 ? 0xe0a030 : C.red;
+  };
+  for (let x = -9; x <= 9; x++) {
+    for (let y = 5; y <= 22; y++) v.set(x, y, 0, weave(x, y));
+    for (let y = 10; y <= 22; y++) v.set(x, y, -2, weave(x + 3, y));
+    v.set(x, 23, 0, weave(x, 23)); v.set(x, 23, -2, weave(x, 23)); v.set(x, 24, -1, weave(x, 24));
+  }
+  return v;
+}
+
+// a piña barong on a dress form: sheer cream cloth with an embroidered panel down the front
+export function pinaBarong() {
+  const v = new Vox();
+  v.cyl(0, 0, 0, 0, 3, C.woodDark);
+  v.box(0, 1, 0, 0, 9, 0, C.woodDark);
+  const cloth = (x, y, z) => (Math.abs(x) <= 1 && z > 0 ? (mod2(y + x, 3) ? 0xe6d6b4 : 0xd8c49c) : mod2(x + y + z, 5) ? 0xf3ecdc : 0xe9dfca);
+  for (let y = 10; y <= 25; y++) {
+    const half = y > 22 ? 5 : y > 18 ? 4 : 3.6;
+    for (let x = -Math.ceil(half); x <= Math.ceil(half); x++) for (let z = -2; z <= 2; z++) {
+      if ((x * x) / (half * half) + (z * z) / 6 > 1.05) continue;
+      v.set(x, y, z, cloth(x, y, z));
+    }
+  }
+  for (const s of [-1, 1]) for (let y = 13; y <= 23; y++) v.set(s * 6, y, 0, mod2(y, 4) ? 0xf3ecdc : 0xe6d6b4);
+  v.box(-1, 26, -1, 1, 26, 1, 0xe6d6b4);
+  v.box(0, 27, 0, 0, 28, 0, C.woodDark);
+  return v;
+}
+
+// an unglazed burnay jar: broad shoulder, short neck, a lip; dark earth with the kiln's ash on it
+export function burnay(seed = 1) {
+  const v = new Vox();
+  const tall = hash3(seed, 2, 2) > 0.5;
+  const radii = tall ? [3, 4.5, 5.5, 6, 6.5, 6.5, 6.2, 5.6, 4.8, 3.8, 2.8, 2.4, 2.4, 3] : [3, 4.5, 5.5, 6.2, 6.5, 6.2, 5.4, 4.2, 3, 2.5, 3];
+  v.lathe(0, 0, 0, radii, (x, y, z) => (y >= radii.length - 1 ? 0x5e3f31 : hash3(x + seed, y, z) > 0.78 ? 0x8a6450 : hash3(x, y + seed, z) > 0.5 ? 0x6f4b3a : 0x7a5442), radii.length - 2);
+  return v;
+}
+
+// the Manunggul jar: a wide buff body with red scrolls on the shoulder and lid, and on the lid the boat
+// of souls, a paddler and a seated figure with crossed arms
+export function manunggulJar() {
+  const v = new Vox();
+  const body = [4, 6, 7.5, 8.4, 9, 9.2, 9, 8.6, 8, 7.2, 6.6];
+  const lid = [6.8, 6.4, 5.6, 4.4, 3];
+  const scroll = (x, y, z) => {
+    const a = Math.atan2(z, x);
+    return Math.abs(Math.sin(a * 5 + y * 0.9)) > 0.72 ? 0x9c3b26 : hash3(x, y, z) > 0.85 ? 0xa06a46 : 0xb58058;
+  };
+  v.lathe(0, 0, 0, body, (x, y, z) => (y >= 6 ? scroll(x, y, z) : hash3(x, y, z) > 0.8 ? 0xa06a46 : 0xb58058));
+  v.lathe(0, 0, body.length, lid, (x, y, z) => (y === body.length ? 0x8a5a3a : scroll(x, y, z)));
+  const top = body.length + lid.length;
+  // the boat: a hull with low sides, bow and stern lifting at the ends, a face on the prow
+  for (let x = -7; x <= 7; x++) {
+    const lift = Math.abs(x) > 5 ? Math.abs(x) - 5 : 0, half = Math.abs(x) > 5 ? 0 : 1;
+    for (let z = -half; z <= half; z++) v.set(x, top + lift, z, 0x9a6648);
+    if (half) { v.set(x, top + 1, -1, 0xa8745a); v.set(x, top + 1, 1, 0xa8745a); }
+  }
+  v.set(-7, top + 3, 0, 0x8a5a3a); v.set(7, top + 3, 0, 0x9a6648);
+  // two seated figures: the steersman behind, the soul in front with its arms crossed
+  for (const [x, crossed] of [[2, false], [-2, true]]) {
+    v.box(x, top + 1, 0, x + 1, top + 2, 0, 0xa8745a);
+    v.box(x, top + 3, 0, x + 1, top + 3, 0, 0x8a5a3a);
+    if (crossed) { v.set(x, top + 2, 1, 0x8a5a3a); v.set(x + 1, top + 2, 1, 0x8a5a3a); }
+  }
+  return v;
+}
+
+// kulintang on its carved okir frame, with two agung gongs hanging behind: brass in the open
+export function brassEnsemble() {
+  const v = new Vox();
+  const okir = (x, y) => [C.red, C.yellow, C.green, C.teal][mod2(Math.floor(x / 2) + y, 4)];
+  for (const x of [-15, 15]) v.box(x, 0, -1, x, 5, 1, C.woodDark);
+  v.box(-16, 6, -2, 16, 7, 2, (x, y) => (y === 7 ? okir(x, y) : C.woodDark));
+  for (let i = 0; i < 8; i++) {
+    const cx = Math.round(-13 + i * 3.7);
+    v.cyl(cx, 0, 8, 8, 1.6, BRONZE);
+    v.set(cx, 9, 0, 0xc9a24a);
+  }
+  for (const x of [-12, 12]) v.box(x, 0, -9, x, 27, -9, C.woodDark);
+  v.box(-12, 27, -9, 12, 27, -9, C.wood);
+  for (const [cx, r] of [[-5, 5], [6, 4]]) { v.line(cx, 26, -9, cx, 14 + r, -9, 0x3a2a22); gong(v, cx, 14, -8, r); }
+  return v;
+}
+
+// a fruit stall for Kadayawan: a bamboo frame, a thatch roof, the harvest piled on the table
+export function fruitStall(seed = 1) {
+  const v = new Vox();
+  for (const [x, z] of [[-5, -3], [5, -3], [-5, 3], [5, 3]]) v.box(x, 0, z, x, 9, z, C.bamboo);
+  v.box(-5, 4, -3, 5, 4, 3, C.bambooDark);
+  for (let i = 0; i <= 2; i++) v.box(-6 + i, 10 + i, -4 + i, 6 - i, 10 + i, 4 - i, i % 2 ? C.thatch : C.thatchDark);
+  const fruit = [0xe8c547, 0x8aa646, 0xc0392b, 0xf0b040, 0x5e9a5a];
+  for (let x = -4; x <= 4; x++) for (let z = -2; z <= 2; z++) {
+    const h = 1 + Math.floor(hash3(x + seed, 3, z) * 2);
+    for (let y = 5; y < 5 + h; y++) v.set(x, y, z, fruit[Math.floor(hash3(x, y + seed, z) * fruit.length)]);
+  }
+  return v;
+}
+
+// ---------------------------------------------------------------- the five of us (Members page)
+// Placeholders, one function per member, each in its own thread colour. Each one gets rebuilt from
+// that member's reference photograph (hair, face, clothes); keep the name, the scene places them by it.
+export const MEMBERS = {
+  aningat: () => person({ seed: 60, top: C.clay, sleeve: C.clay, bottom: C.indigo, arms: 'up' }),
+  banting: () => person({ seed: 61, top: C.gold, sleeve: C.gold, bottom: C.indigo, arms: 'down' }),
+  dumalagan: () => person({ seed: 62, top: C.indigo, sleeve: C.indigo, bottom: 0x2e2a28, arms: 'out' }),
+  lausa: () => person({ seed: 63, top: C.clay, sleeve: C.clay, bottom: C.indigo, arms: 'down' }),
+  magallanes: () => person({ seed: 64, top: C.gold, sleeve: C.gold, bottom: C.indigo, arms: 'up' }),
+};

@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sining — Habing Lahi</title>
-<meta name="description" content="Filipino handmade art: t’nalak and inabel weaving, piña cloth, burnay jars, the Manunggul jar and kulintang gongs.">
+<meta name="description" content="Three voxel museums of Filipino handmade art, Textile, Clay and Brass: walk the hall to t’nalak, inabel, piña, burnay, the Manunggul jar and the kulintang.">
 <meta name="theme-color" content="#1b2742">
 <link rel="icon" href="assets/logos/heritage-icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
+<link rel="modulepreload" href="js/vendor/three.core.js">
+<link rel="modulepreload" href="js/vendor/three.module.min.js">
 <script src="js/site.js" defer></script>
+<script type="module" src="js/arts.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -33,117 +36,162 @@
 
 <main id="main">
 
-<section class="page-hero dark" aria-labelledby="a-title">
-  <div class="wrap page-hero__grid">
-    <div>
-      <h1 id="a-title" class="reveal" style="--delay:100ms"><span lang="fil">Sining</span></h1>
-      <p class="lead reveal" style="--delay:250ms">Things made by hand, and the hands that keep making them. Cloth, clay and brass from the north of Luzon to the lakes of Mindanao.</p>
-    </div>
-    <div class="page-hero__photo reveal" style="--delay:350ms"><img src="assets/img/photo-f154542548-960.webp" alt="Rows of unglazed burnay clay jars drying side by side in a Vigan workshop" width="960" height="1280" fetchpriority="high"></div>
+<section class="vhero plaza" aria-labelledby="a-title">
+  <canvas aria-hidden="true"></canvas>
+  <h1 id="a-title" class="vhero__motto reveal" style="--delay:200ms">Things made by hand, and the hands that keep making them.<span class="visually-hidden"> <span lang="fil">Sining</span>.</span></h1>
+  <div class="plaza__doors" role="group" aria-label="The three museums">
+    <button class="vhero__pin plaza__door" type="button" data-museum="textile"><span class="plaza__tag">Enter the Textile museum</span></button>
+    <button class="vhero__pin plaza__door" type="button" data-museum="clay"><span class="plaza__tag">Enter the Clay museum</span></button>
+    <button class="vhero__pin plaza__door" type="button" data-museum="brass"><span class="plaza__tag">Enter the Brass museum</span></button>
   </div>
-  <span class="threadline" aria-hidden="true"></span>
+  <div class="vhero__panel dark reveal" style="--delay:350ms">
+    <p>Cloth, clay and brass from the north of Luzon to the lakes of Mindanao, in three museums. Pick one to walk into its hall.</p>
+    <div class="vhero__actions"><a class="btn" href="#hall">Walk through the hall</a><a class="link" href="story-tnalak.html">Read the t’nalak story</a></div>
+  </div>
 </section>
 
-<section aria-labelledby="wall-title">
-  <div class="wrap">
-    <div class="atlas__head">
+<section class="hall dark" id="hall" aria-labelledby="hall-title">
+  <div class="hall__stage">
+    <canvas aria-hidden="true"></canvas>
+    <div class="wrap hall__head">
       <div>
-        <h2 id="wall-title">The gallery wall</h2>
-        <p class="muted">Open any piece to read where it comes from and who keeps it.</p>
+        <h2 id="hall-title">The gallery wall</h2>
+        <p class="muted">Scroll to walk the hall. Open a piece to look closer.</p>
       </div>
-      <div class="chips" role="group" aria-label="Show material">
-        <button class="chip" type="button" data-material="all" aria-pressed="true">All pieces</button>
-        <button class="chip" type="button" data-material="textile" aria-pressed="false">Textile</button>
-        <button class="chip" type="button" data-material="clay" aria-pressed="false">Clay</button>
-        <button class="chip" type="button" data-material="brass" aria-pressed="false">Brass</button>
-      </div>
+      <nav class="hall__wings" aria-label="Museums">
+        <a class="chip" href="#tnalak" data-wing="textile">Textile</a>
+        <a class="chip" href="#burnay" data-wing="clay">Clay</a>
+        <a class="chip" href="#kulintang" data-wing="brass">Brass</a>
+      </nav>
     </div>
-
-    <div class="wall">
-      <button class="art" id="tnalak" type="button" data-mat="textile" aria-haspopup="dialog">
-        <span class="art__frame"><img style="--ar:3/2" src="assets/img/photo-f185527484-960.webp" alt="T’boli weaver at a backstrap loom, black and red t’nalak cloths hanging behind her" width="960" height="640" loading="lazy"></span>
-        <span class="art__name">T’nalak</span>
-        <span class="art__meta"><span class="tag">Abaca</span> T’boli, Lake Sebu</span>
-        <template>
-          <h2 style="font-size:var(--t-1)">T’nalak</h2>
-          <p>Abaca fibres are tied and dyed before they reach the loom, so the pattern exists before the cloth does. Black, red and the natural cream of the fibre are the only colours.</p>
-          <p class="muted">T’boli weavers are called dreamweavers: the designs are said to come to them in sleep. Lang Dulay of Lake Sebu was named a National Living Treasure in 1998.</p>
-          <dl><dt>Community</dt><dd>T’boli</dd><dt>Place</dt><dd>Lake Sebu, South Cotabato</dd><dt>Material</dt><dd>Abaca, natural dyes</dd></dl>
-          <p><a class="link" href="story-tnalak.html">Read the t’nalak story</a></p>
-        </template>
-      </button>
-
-      <button class="art" id="inabel" type="button" data-mat="textile" aria-haspopup="dialog">
-        <span class="art__frame"><img src="assets/img/photo-f201577316-960.webp" alt="Wooden floor loom with red and saffron cotton cloth half woven on it" width="960" height="1157" loading="lazy"></span>
-        <span class="art__name"><span lang="fil">Inabel</span></span>
-        <span class="art__meta"><span class="tag">Cotton</span> Ilocos</span>
-        <template>
-          <h2 style="font-size:var(--t-1)">Inabel</h2>
-          <p>Cotton woven on wooden pedal looms in tight geometric patterns, thick enough for a blanket and soft enough to wear every day.</p>
-          <p class="muted">Magdalena Gamayo of Pinili, Ilocos Norte, learned the patterns by memory and was named a National Living Treasure in 2012.</p>
-          <dl><dt>Community</dt><dd>Ilocano weavers</dd><dt>Place</dt><dd>Ilocos Norte and Ilocos Sur</dd><dt>Material</dt><dd>Cotton</dd></dl>
-        </template>
-      </button>
-
-      <button class="art" id="pina" type="button" data-mat="textile" aria-haspopup="dialog">
-        <span class="art__frame"><img src="assets/img/photo-f154924372-960.webp" alt="Sheer cream piña barong with embroidered panels on a hanger" width="960" height="1391" loading="lazy"></span>
-        <span class="art__name"><span lang="fil">Piña</span></span>
-        <span class="art__meta"><span class="tag">Pineapple fibre</span> Aklan</span>
-        <template>
-          <h2 style="font-size:var(--t-1)">Piña</h2>
-          <p>Fibre is scraped by hand from pineapple leaves, knotted end to end and woven into a cloth so fine you can read through it. It is the cloth of the formal barong.</p>
-          <p class="muted">Kalibo, the same town that dances Ati-Atihan, is where most piña is still woven.</p>
-          <dl><dt>Place</dt><dd>Kalibo, Aklan</dd><dt>Material</dt><dd>Pineapple leaf fibre</dd><dt>Used for</dt><dd>Barong and baro’t saya</dd></dl>
-        </template>
-      </button>
-
-      <button class="art" id="burnay" type="button" data-mat="clay" aria-haspopup="dialog">
-        <span class="art__frame"><img style="--ar:4/3" src="assets/img/photo-f146938627-960.webp" alt="Potter shaping a tall clay jar on a wheel, finished burnay jars on shelves around him" width="960" height="623" loading="lazy"></span>
-        <span class="art__name"><span lang="fil">Burnay</span></span>
-        <span class="art__meta"><span class="tag">Clay</span> Vigan</span>
-        <template>
-          <h2 style="font-size:var(--t-1)">Burnay</h2>
-          <p>Unglazed earthen jars thrown on a wheel turned by foot and fired in a brick kiln. They hold <i lang="fil">basi</i>, sugarcane wine, and <i lang="fil">bagoong</i> while they ferment.</p>
-          <p class="muted">The craft came to Vigan with Chinese potters before the Spanish arrived, and a few families in the Pagburnayan district still keep it.</p>
-          <dl><dt>Place</dt><dd>Vigan, Ilocos Sur</dd><dt>Material</dt><dd>Local clay, wood-fired</dd></dl>
-          <p><a class="link" href="story-burnay.html">Read the burnay story</a></p>
-        </template>
-      </button>
-
-      <button class="art" id="manunggul" type="button" data-mat="clay" aria-haspopup="dialog">
-        <span class="art__frame"><img src="assets/img/photo-f82346812-960.webp" alt="The Manunggul burial jar in a museum case, two small figures in a boat on its lid" width="960" height="1280" loading="lazy"></span>
-        <span class="art__name">Manunggul jar</span>
-        <span class="art__meta"><span class="tag">Clay</span> Palawan</span>
-        <template>
-          <h2 style="font-size:var(--t-1)">Manunggul jar</h2>
-          <p>A secondary burial jar from about 890 to 710 BCE, found in the Tabon Caves of Palawan. On the lid two figures row a boat: a soul on its way to the afterlife.</p>
-          <p class="muted">It is a National Cultural Treasure and is kept at the National Museum of Anthropology in Manila.</p>
-          <dl><dt>Found</dt><dd>Tabon Caves, Palawan</dd><dt>Age</dt><dd>About 2,800 years</dd><dt>Material</dt><dd>Earthenware, painted</dd></dl>
-        </template>
-      </button>
-
-      <button class="art" id="kulintang" type="button" data-mat="brass" aria-haspopup="dialog">
-        <span class="art__frame"><img style="--ar:16/9" src="assets/img/photo-f185334698-960.webp" alt="A row of five bossed brass kulintang gongs on a painted wooden frame" width="960" height="419" loading="lazy"></span>
-        <span class="art__name"><span lang="fil">Kulintang</span></span>
-        <span class="art__meta"><span class="tag">Brass</span> Mindanao</span>
-        <template>
-          <h2 style="font-size:var(--t-1)">Kulintang</h2>
-          <p>A row of gongs tuned from low to high, laid on a carved frame and played with two soft beaters. Larger hanging gongs and a drum play around it.</p>
-          <p class="muted">The music is learned by ear, player to player. The frames are often carved and painted with <i lang="fil">okir</i>, the flowing Maranao design.</p>
-          <dl><dt>Communities</dt><dd>Maranao, Maguindanaon</dd><dt>Place</dt><dd>Lanao and Maguindanao</dd><dt>Material</dt><dd>Brass, wood</dd></dl>
-        </template>
-      </button>
+    <ol class="hall__pieces">
+      <li><button class="hall__piece" id="tnalak" type="button" aria-haspopup="dialog"><span>T’nalak</span></button></li>
+      <li><button class="hall__piece" id="inabel" type="button" aria-haspopup="dialog"><span lang="fil">Inabel</span></button></li>
+      <li><button class="hall__piece" id="pina" type="button" aria-haspopup="dialog"><span lang="fil">Piña</span></button></li>
+      <li><button class="hall__piece" id="burnay" type="button" aria-haspopup="dialog"><span lang="fil">Burnay</span></button></li>
+      <li><button class="hall__piece" id="manunggul" type="button" aria-haspopup="dialog"><span>Manunggul jar</span></button></li>
+      <li><button class="hall__piece" id="kulintang" type="button" aria-haspopup="dialog"><span lang="fil">Kulintang</span></button></li>
+    </ol>
+    <div class="wrap hall__foot">
+      <div class="hall__placard" aria-live="polite">
+        <p class="hall__count" data-now-num>1 of 6</p>
+        <h3 data-now-name>T’nalak</h3>
+        <p class="muted" data-now-maker>Woven by T’boli women of Lake Sebu, South Cotabato</p>
+      </div>
+      <button class="btn" type="button" data-open aria-haspopup="dialog">Look closer</button>
     </div>
   </div>
 </section>
 
-<dialog class="viewer" aria-label="Artwork details">
+<!-- the museum labels: the tombstone (museum, name, maker, medium, date), then the curator's note -->
+<template data-label="tnalak" data-photo="assets/img/photo-f185527484-960.webp" data-alt="T’boli weaver at a backstrap loom, black and red t’nalak cloths hanging behind her">
+  <p class="label__wing">Textile museum</p>
+  <h2 id="piece-title">T’nalak</h2>
+  <p class="label__maker">Woven by T’boli women of Lake Sebu, South Cotabato</p>
+  <p class="label__medium">Abaca fibre, tie-dyed with natural dyes and woven on a backstrap loom</p>
+  <p class="label__date">A living tradition</p>
+  <div class="label__note">
+    <p>The pattern exists before the cloth does. The weaver ties and dyes the abaca threads before they reach the loom, and black, red and the natural cream of the fibre are the only colours.</p>
+    <p>T’boli weavers are called dreamweavers: the designs are said to come to them in sleep. Lang Dulay of Lake Sebu was named a National Living Treasure in 1998.</p>
+  </div>
+  <p><a class="link" href="story-tnalak.html">Read the t’nalak story</a></p>
+</template>
+<template data-label="inabel" data-photo="assets/img/photo-f201577316-960.webp" data-alt="Wooden floor loom with red and saffron cotton cloth half woven on it">
+  <p class="label__wing">Textile museum</p>
+  <h2 id="piece-title"><span lang="fil">Inabel</span></h2>
+  <p class="label__maker">Woven by Ilocano weavers of Ilocos Norte and Ilocos Sur</p>
+  <p class="label__medium">Cotton, woven on a wooden pedal loom</p>
+  <p class="label__date">A living tradition</p>
+  <div class="label__note">
+    <p>Tight geometric patterns make a cloth thick enough for a blanket and soft enough to wear every day.</p>
+    <p>Magdalena Gamayo of Pinili, Ilocos Norte, learned the patterns by memory and was named a National Living Treasure in 2012.</p>
+  </div>
+</template>
+<template data-label="pina" data-photo="assets/img/photo-f154924372-960.webp" data-alt="Sheer cream piña barong with embroidered panels on a hanger">
+  <p class="label__wing">Textile museum</p>
+  <h2 id="piece-title"><span lang="fil">Piña</span></h2>
+  <p class="label__maker">Woven in Kalibo, Aklan</p>
+  <p class="label__medium">Pineapple leaf fibre, scraped and knotted by hand, woven into a sheer cloth</p>
+  <p class="label__date">A living tradition, worn as the barong and the baro’t saya</p>
+  <div class="label__note">
+    <p>Fibre is scraped by hand from pineapple leaves, knotted end to end and woven into a cloth so fine you can read through it. It is the cloth of the formal barong.</p>
+    <p>Kalibo, the same town that dances Ati-Atihan, is where most piña is still woven.</p>
+  </div>
+</template>
+<template data-label="burnay" data-photo="assets/img/photo-f146938627-960.webp" data-alt="Potter shaping a tall clay jar on a wheel, finished burnay jars on shelves around him">
+  <p class="label__wing">Clay museum</p>
+  <h2 id="piece-title"><span lang="fil">Burnay</span></h2>
+  <p class="label__maker">Made by the potters of Pagburnayan, Vigan, Ilocos Sur</p>
+  <p class="label__medium">Local clay, thrown on a wheel turned by foot and fired unglazed in a brick kiln</p>
+  <p class="label__date">A living tradition</p>
+  <div class="label__note">
+    <p>Jars like this one hold <i lang="fil">basi</i>, sugarcane wine, and <i lang="fil">bagoong</i> while they ferment.</p>
+    <p>The craft came to Vigan with Chinese potters before the Spanish arrived, and a few families in the Pagburnayan district still keep it.</p>
+  </div>
+  <p><a class="link" href="story-burnay.html">Read the burnay story</a></p>
+</template>
+<template data-label="manunggul" data-photo="assets/img/photo-f82346812-960.webp" data-alt="The Manunggul burial jar in a museum case, two small figures in a boat on its lid">
+  <p class="label__wing">Clay museum</p>
+  <h2 id="piece-title">Manunggul jar</h2>
+  <p class="label__maker">Found in the Tabon Caves, Palawan</p>
+  <p class="label__medium">Earthenware, painted; a secondary burial jar</p>
+  <p class="label__date">About 890 to 710 BCE</p>
+  <div class="label__note">
+    <p>On the lid two figures row a boat: a soul on its way to the afterlife.</p>
+    <p>The jar is a National Cultural Treasure, kept at the National Museum of Anthropology in Manila.</p>
+  </div>
+</template>
+<template data-label="kulintang" data-photo="assets/img/photo-f185334698-960.webp" data-alt="A row of five bossed brass kulintang gongs on a painted wooden frame">
+  <p class="label__wing">Brass museum</p>
+  <h2 id="piece-title"><span lang="fil">Kulintang</span></h2>
+  <p class="label__maker">Played by Maranao and Maguindanaon musicians of Lanao and Maguindanao</p>
+  <p class="label__medium">Brass gongs on a carved and painted wooden frame</p>
+  <p class="label__date">A living tradition</p>
+  <div class="label__note">
+    <p>A row of gongs tuned from low to high, played with two soft beaters while larger hanging gongs and a drum play around it.</p>
+    <p>The music is learned by ear, player to player. The frames are often carved and painted with <i lang="fil">okir</i>, the flowing Maranao design.</p>
+  </div>
+</template>
+
+<section class="screen stories--light" aria-labelledby="stories-title">
+  <div class="wrap">
+    <div class="split-head">
+      <h2 id="stories-title">Stories from the loom and the kiln</h2>
+      <p class="lead muted">Two crafts followed from the raw material to the finished piece, with a voxel model that builds each stage as you read.</p>
+    </div>
+    <div class="story-pair">
+      <a class="story-card" href="story-tnalak.html">
+        <span class="story-card__img"><img src="assets/img/photo-f27708052-960.webp" alt="Bundles of pale, combed abaca fibre hanging side by side" width="960" height="640" loading="lazy"></span>
+        <span class="story-card__body">
+          <span class="story-card__meta">Lake Sebu, a 9-minute read</span>
+          <span class="story-card__title">The cloth that comes in dreams</span>
+          <span class="muted">How T’boli women turn abaca into t’nalak, from the plant to the polished cloth.</span>
+        </span>
+      </a>
+      <a class="story-card" href="story-burnay.html">
+        <span class="story-card__img"><img src="assets/img/photo-f154542548-960.webp" alt="Rows of unglazed burnay clay jars drying side by side in a Vigan workshop" width="960" height="1280" loading="lazy"></span>
+        <span class="story-card__body">
+          <span class="story-card__meta">Vigan, an 8-minute read</span>
+          <span class="story-card__title">Clay, carabao and fire</span>
+          <span class="muted">The burnay jars of Vigan, mixed underfoot, thrown by hand and fired for a day and a night.</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<dialog class="viewer piece" aria-labelledby="piece-title">
   <button class="viewer__close" type="button" aria-label="Close">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
   </button>
   <div class="viewer__grid">
-    <img alt="" width="960" height="1200">
-    <div class="viewer__body"></div>
+    <div class="piece__stage">
+      <canvas aria-hidden="true"></canvas>
+      <img class="piece__photo" alt="" width="960" height="640">
+      <p class="piece__hint" aria-hidden="true">Drag, or use the arrow keys, to turn it any way</p>
+      <button class="piece__swap" type="button" aria-pressed="false"><img alt="" width="96" height="64"><span>See the photograph</span></button>
+    </div>
+    <div class="viewer__body piece__label"></div>
   </div>
 </dialog>
 

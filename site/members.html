@@ -11,7 +11,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
+<link rel="modulepreload" href="js/vendor/three.core.js">
+<link rel="modulepreload" href="js/vendor/three.module.min.js">
 <script src="js/site.js" defer></script>
+<script type="module" src="js/members.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -33,11 +36,57 @@
 
 <main id="main">
 
-<section class="dark" aria-labelledby="m-title" style="padding-top:150px">
-  <div class="wrap">
-    <h1 id="m-title" class="reveal" style="--delay:100ms;font-size:var(--t-hero);line-height:.92;letter-spacing:-.02em;font-weight:500"><span lang="fil">Kami</span></h1>
-    <p class="lead reveal" style="--delay:250ms;margin-top:20px;color:var(--hamog)">Five threads, one cloth. We are Stark Industries, a group of five from BSCS-4B.</p>
+<section class="vhero shore" aria-labelledby="m-title">
+  <canvas aria-hidden="true"></canvas>
+  <h1 id="m-title" class="vhero__motto reveal" style="--delay:200ms">Five threads, one cloth.<span class="visually-hidden"> <span lang="fil">Kami</span>.</span></h1>
+  <div class="shore__pins" role="group" aria-label="The five of us">
+    <button class="vhero__pin shore__pin" type="button" aria-pressed="false"><span class="visually-hidden">Christan Ray M. Aningat, designer</span></button>
+    <button class="vhero__pin shore__pin" type="button" aria-pressed="false"><span class="visually-hidden">Sophia Lorraine G. Banting, researcher</span></button>
+    <button class="vhero__pin shore__pin" type="button" aria-pressed="false"><span class="visually-hidden">Chryz Johnred C. Dumalagan, web developer</span></button>
+    <button class="vhero__pin shore__pin" type="button" aria-pressed="false"><span class="visually-hidden">Dancel D. Lausa, writer</span></button>
+    <button class="vhero__pin shore__pin" type="button" aria-pressed="false"><span class="visually-hidden">Axel C. Magallanes, group leader and presenter</span></button>
+  </div>
+  <div class="vhero__panel shore__panel dark" aria-live="polite" hidden></div>
+  <a class="vhero__cue" href="#threads"><span aria-hidden="true"></span>Pick one of us, or scroll to meet all five</a>
 
+  <template data-member="aningat">
+    <p class="vhero__meta">Designer</p>
+    <h2 class="vhero__name">Christan Ray M. Aningat</h2>
+    <p>The first of our five threads, the clay one.</p>
+    <div class="vhero__actions"><a class="btn" href="#threads">Meet all five</a><button class="link" type="button" data-back>Back to the shore</button></div>
+  </template>
+  <template data-member="banting">
+    <p class="vhero__meta">Researcher</p>
+    <h2 class="vhero__name">Sophia Lorraine G. Banting</h2>
+    <p>The second of our five threads, the gold one.</p>
+    <div class="vhero__actions"><a class="btn" href="#threads">Meet all five</a><button class="link" type="button" data-back>Back to the shore</button></div>
+  </template>
+  <template data-member="dumalagan">
+    <p class="vhero__meta">Web developer</p>
+    <h2 class="vhero__name">Chryz Johnred C. Dumalagan</h2>
+    <p>The third of our five threads, the indigo one in the middle.</p>
+    <div class="vhero__actions"><a class="btn" href="#threads">Meet all five</a><button class="link" type="button" data-back>Back to the shore</button></div>
+  </template>
+  <template data-member="lausa">
+    <p class="vhero__meta">Writer</p>
+    <h2 class="vhero__name">Dancel D. Lausa</h2>
+    <p>The fourth of our five threads, the clay one.</p>
+    <div class="vhero__actions"><a class="btn" href="#threads">Meet all five</a><button class="link" type="button" data-back>Back to the shore</button></div>
+  </template>
+  <template data-member="magallanes">
+    <p class="vhero__meta">Group leader and presenter</p>
+    <h2 class="vhero__name">Axel C. Magallanes</h2>
+    <p>The last of our five threads, the gold one that closes the band.</p>
+    <div class="vhero__actions"><a class="btn" href="#threads">Meet all five</a><button class="link" type="button" data-back>Back to the shore</button></div>
+  </template>
+</section>
+
+<section class="screen" id="threads" aria-labelledby="threads-title">
+  <div class="wrap">
+    <div class="split-head">
+      <h2 id="threads-title">The five of us</h2>
+      <p class="lead muted">We are Stark Industries, five students of BSCS&#8209;4B. Each of us carried one part of Habing Lahi, and our surnames weave the band that holds them.</p>
+    </div>
     <div class="loom" data-moment>
       <article class="thread thread--clay" style="--n:0">
         <span class="mono" aria-hidden="true">CA</span>
@@ -69,13 +118,13 @@
   </div>
 </section>
 
-<section aria-labelledby="why-title">
-  <div class="wrap project">
+<section class="screen dark" id="why" aria-labelledby="why-title">
+  <div class="wrap why">
     <div class="prose">
       <h2 id="why-title">Why we built Habing Lahi</h2>
       <p class="lead" style="margin-top:20px">Stark Industries uses technology to keep culture alive and to carry it further.</p>
       <p style="margin-top:20px">A festival lasts a weekend. A weaving pattern lives in one person’s memory. When the information sits only in a town, it reaches only that town. We put it online, in plain words, with the place and the people named, so a student in Manila or a family abroad can find it, and the town gets visitors who already know what they are looking at.</p>
-      <p>Our logo is a banig mat folded into an eight-ray sun. The site is built the same way: the islands as one woven map, the traditions as threads across the year, and the five of us as five threads in the same cloth.</p>
+      <p class="muted">Our logo is a banig mat folded into an eight-ray sun. The site is built the same way: the islands as one woven map, the traditions as threads across the year, and the five of us as five threads in the same cloth.</p>
       <p class="muted">RVA Digital Interface Design · BSCS-4B · presented 23 November 2026.</p>
     </div>
     <div class="lockup"><img src="assets/logos/heritage-final.svg" alt="Stark Industries cultural heritage lockup: the woven sun beside the wordmark and the five surnames of the group" width="1200" height="360" loading="lazy"></div>
