@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Habing Lahi — Filipino traditions, woven online</title>
+<meta name="description" content="A cultural heritage archive by Stark Industries: fly over a voxel Philippines, open its festivals and crafts on a woven map, and read the stories behind them.">
+<meta name="theme-color" content="#1b2742">
+<link rel="icon" href="assets/logos/heritage-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<link rel="modulepreload" href="js/vendor/three.core.js">
+<link rel="modulepreload" href="js/vendor/three.module.min.js">
+<script src="js/site.js" defer></script>
+<script type="module" src="js/overview.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-nav">
+  <a class="brand" href="index.html" aria-label="Habing Lahi, home">
+    <img class="brand__chip" src="assets/logos/heritage-icon.svg" alt="" width="40" height="40">
+    <span class="brand__name" lang="fil">Habing Lahi</span>
+  </a>
+  <nav aria-label="Main">
+    <ul class="nav-links">
+      <li><a href="index.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.2"/></svg>Overview</a></li>
+      <li><a href="traditions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Traditions</a></li>
+      <li><a href="arts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20c-1.5-2-2-4.5-1-7 .8-2 2.5-3 2.5-5V5h7v3c0 2 1.7 3 2.5 5 1 2.5.5 5-1 7z"/><path d="M8.5 8h7"/></svg>Arts</a></li>
+      <li><a href="members.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="9" r="3"/><circle cx="16.5" cy="9" r="3"/><path d="M2.5 20c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M11 20c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/></svg>Members</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+<section class="world dark" id="world" aria-labelledby="hero-title">
+  <div class="world__sticky">
+    <canvas class="world__canvas" aria-hidden="true"></canvas>
+    <img class="world__poster" src="assets/world/hero-poster.jpg" alt="" aria-hidden="true" width="1920" height="1080" fetchpriority="high">
+    <div class="world__shade" aria-hidden="true"></div>
+
+    <div class="world__hero">
+      <h1 id="hero-title" class="world__motto">Scroll. Explore. Discover.<span class="visually-hidden"> Pearl of the Orient Seas.</span></h1>
+    </div>
+
+    <p class="world__tag" aria-hidden="true"><b data-tag-name></b><span data-tag-place></span></p>
+    <p class="world__cue" aria-hidden="true"><span></span>Scroll to explore the islands</p>
+    <a class="world__skip" href="#atlas" data-jump="map">Skip to the map</a>
+    <button class="chip world__sound" type="button" data-on="false" hidden>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/><path class="world__sound-on" d="M15.5 9.3a3.8 3.8 0 0 1 0 5.4M18.2 6.7a7.4 7.4 0 0 1 0 10.6"/><path class="world__sound-off" d="M16 9.6l4.8 4.8M20.8 9.6L16 14.4"/></svg>
+      <span>Turn on sound</span>
+    </button>
+
+    <div class="world__map" id="atlas" aria-labelledby="atlas-title">
+      <div class="world__bar wrap">
+        <div>
+          <h2 id="atlas-title">The archipelago, woven</h2>
+          <p class="muted">Each island group is its own cloth. Pick one, or an exclamation mark, to fly in.</p>
+        </div>
+        <div class="chips" role="group" aria-label="Show island group">
+          <button class="chip" type="button" data-region="0" aria-pressed="true">All islands</button>
+          <button class="chip" type="button" data-region="1" aria-pressed="false"><i class="swatch" style="--c:#c4664a"></i>Luzon</button>
+          <button class="chip" type="button" data-region="2" aria-pressed="false"><i class="swatch" style="--c:#ddb260"></i>Visayas</button>
+          <button class="chip" type="button" data-region="3" aria-pressed="false"><i class="swatch" style="--c:#5fa596"></i>Mindanao</button>
+        </div>
+      </div>
+      <div class="world__pins" role="group" aria-label="Places on the map. Use the arrow keys to move between them."></div>
+      <button class="world__back chip" type="button" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        <span>Back to the islands</span>
+      </button>
+      <article class="dossier world__dossier" aria-live="polite"></article>
+      <p class="world__turn" aria-hidden="true">Drag to turn</p>
+    </div>
+
+    <div class="world__streaks" aria-hidden="true"></div>
+  </div>
+</section>
+
+<section class="statement" aria-labelledby="why-title">
+  <div class="wrap statement__grid">
+    <div>
+      <h2 id="why-title" class="statement__quote">A tradition lasts when someone outside the town can still find it.</h2>
+      <p class="lead" style="margin-top:28px">Stark Industries uses technology to keep Filipino culture where people already look: online. We build the islands you can fly over, the map you can open, and the long stories that explain why each practice exists.</p>
+    </div>
+    <ul class="facts">
+      <li><strong>7,641</strong>islands in the archipelago, three cloths on our map</li>
+      <li><strong>9</strong>places to open, from Vigan in the north to Lake Sebu in the south</li>
+      <li><strong>3</strong>long stories that follow a craft from raw material to finished work</li>
+    </ul>
+  </div>
+</section>
+
+<section id="stories" class="stories dark" aria-labelledby="stories-title">
+  <div class="wrap">
+    <h2 id="stories-title">Stories from the loom, the kiln and the harvest</h2>
+    <p class="lead muted" style="margin-top:16px">Each story follows one practice through its whole life. Scroll, and the voxel model beside the text builds that stage in front of you.</p>
+    <div class="story-cards">
+      <a class="story-card" href="story-tnalak.html">
+        <span class="story-card__img"><img src="assets/img/photo-f185527484-960.webp" alt="T’boli weaver at a backstrap loom, black and red t’nalak cloths hanging behind her" width="960" height="640" loading="lazy"></span>
+        <span class="story-card__body">
+          <span class="story-card__meta">Lake Sebu, a 9-minute read</span>
+          <span class="story-card__title">The cloth that comes in dreams</span>
+          <span class="muted">How T’boli women turn abaca into t’nalak, from the plant to the polished cloth.</span>
+        </span>
+      </a>
+      <a class="story-card" href="story-burnay.html">
+        <span class="story-card__img"><img src="assets/img/photo-f146938627-960.webp" alt="Potter shaping a tall clay jar on a wheel, finished burnay jars on shelves around him" width="960" height="623" loading="lazy"></span>
+        <span class="story-card__body">
+          <span class="story-card__meta">Vigan, an 8-minute read</span>
+          <span class="story-card__title">Clay, carabao and fire</span>
+          <span class="muted">The burnay jars of Vigan, mixed underfoot, thrown by hand and fired for a day and a night.</span>
+        </span>
+      </a>
+      <a class="story-card" href="story-pahiyas.html">
+        <span class="story-card__img"><img src="assets/img/photo-f132777784-960.webp" alt="Crowds lining a Lucban street hung with harvest decorations as the Pahiyas parade passes" width="960" height="720" loading="lazy"></span>
+        <span class="story-card__body">
+          <span class="story-card__meta">Lucban, an 8-minute read</span>
+          <span class="story-card__title">A town dressed in its harvest</span>
+          <span class="muted">Pahiyas, from the rice field to the kiping on every wall to the procession on 15 May.</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="doors-title">
+  <div class="wrap">
+    <h2 id="doors-title">The rest of the cloth</h2>
+    <div class="doors">
+      <a class="door" href="traditions.html">
+        <div class="door__img"><img src="assets/img/photo-f87187355-960.webp" alt="Ati-Atihan dancers in shell and feather headdresses, faces darkened with soot" width="960" height="640" loading="lazy"></div>
+        <div class="door__body"><h3>Traditions</h3><p class="muted">Festivals and practices, month by month.</p></div>
+      </a>
+      <a class="door" href="arts.html">
+        <div class="door__img"><img src="assets/img/photo-f154542548-960.webp" alt="Rows of unglazed burnay clay jars drying side by side in a Vigan workshop" width="960" height="1280" loading="lazy"></div>
+        <div class="door__body"><h3>Arts</h3><p class="muted">Textiles, clay and brass, made by hand.</p></div>
+      </a>
+      <a class="door door--threads" href="members.html">
+        <div class="door__img" aria-hidden="true">
+          <span style="--c:var(--luad)"></span><span style="--c:var(--palay)"></span><span style="--c:var(--banig)"></span><span style="--c:var(--luad)"></span><span style="--c:var(--palay)"></span>
+        </div>
+        <div class="door__body"><h3>Members</h3><p class="muted">The five of us behind Habing Lahi.</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__grid">
+      <img class="site-foot__logo" src="assets/logos/heritage-final.svg" alt="Stark Industries cultural heritage logo" width="420" height="126" loading="lazy">
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="traditions.html">Traditions</a></li>
+          <li><a href="arts.html">Arts</a></li>
+          <li><a href="members.html">Members</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="credits">
+      <p>Stark Industries · RVA Digital Interface Design · BSCS-4B · 2026</p>
+      <p>Photographs from Wikimedia Commons, CC BY and CC BY-SA; sounds from Freesound, CC0 and CC BY; <a href="credits.html">full credits</a>. Map outline: Natural Earth.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

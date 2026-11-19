@@ -13,3 +13,13 @@ npm-debug.log*
 
 # Agent scratch space
 .agentsession/
+
+# Local preview config and taste-skill state
+.claude/
+site/.taste-skill/
+
+# HyperFrames working files and copied modules
+video/.hyperframes/
+video/renders/
+video/node_modules/
+video/assets/js/

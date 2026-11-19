@@ -1,0 +1,373 @@
+{
+ "note": "Credits for the photographs in this folder: photos.mjs credits prints the footer block for the ones the pages use.",
+ "photos": [
+  {
+   "file": "photo-f78907051-1280.webp",
+   "files": [
+    "photo-f78907051-500.webp",
+    "photo-f78907051-960.webp",
+    "photo-f78907051-1280.webp",
+    "photo-f78907051-780x975.webp"
+   ],
+   "id": "f78907051",
+   "alt": "Banaue rice terraces",
+   "by": "Larsjepp",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Banaue_rice_terraces.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f130057264-960.webp",
+   "files": [
+    "photo-f130057264-500.webp",
+    "photo-f130057264-960.webp"
+   ],
+   "id": "f130057264",
+   "alt": "Sinulog Festival Dancers 5",
+   "by": "Victor D. Kintanar",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Sinulog_Festival_Dancers_5.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f87187355.webp",
+   "files": [
+    "photo-f87187355-500.webp",
+    "photo-f87187355-960.webp",
+    "photo-f87187355.webp"
+   ],
+   "id": "f87187355",
+   "alt": "Dancers Kalibo Ati-Atihan Festival, Philippines",
+   "by": "Elisolidum",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Dancers_Kalibo_Ati-Atihan_Festival,_Philippines.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f150613367-960.webp",
+   "files": [
+    "photo-f150613367-500.webp",
+    "photo-f150613367-960.webp"
+   ],
+   "id": "f150613367",
+   "alt": "Pahiyas Festival, Lucban, Quezon, Jul 2024",
+   "by": "Ralff Nestor Nacor",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Pahiyas_Festival,_Lucban,_Quezon,_Jul_2024.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f156340843.webp",
+   "files": [
+    "photo-f156340843-500.webp",
+    "photo-f156340843-960.webp",
+    "photo-f156340843.webp"
+   ],
+   "id": "f156340843",
+   "alt": "Panagbenga Parade 01",
+   "by": "Cray Ideas",
+   "licence": "CC0",
+   "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "page": "https://commons.wikimedia.org/wiki/File:Panagbenga_Parade_01.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f87436043.webp",
+   "files": [
+    "photo-f87436043-500.webp",
+    "photo-f87436043-960.webp",
+    "photo-f87436043.webp"
+   ],
+   "id": "f87436043",
+   "alt": "Indak Boy Kadayawan Festival 1",
+   "by": "Fpj455",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Indak_Boy_Kadayawan_Festival_1.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f140070377.webp",
+   "files": [
+    "photo-f140070377-500.webp",
+    "photo-f140070377-960.webp",
+    "photo-f140070377.webp"
+   ],
+   "id": "f140070377",
+   "alt": "Zamboanga City proper, RT Lim Boulevard with vinta boats (Zamboanga City; 10-06-2023)",
+   "by": "Patrickroque01",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Zamboanga_City_proper,_RT_Lim_Boulevard_with_vinta_boats_(Zamboanga_City;_10-06-2023).jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f185527484-960.webp",
+   "files": [
+    "photo-f185527484-500.webp",
+    "photo-f185527484-960.webp"
+   ],
+   "id": "f185527484",
+   "alt": "The Dreamweaver, Tnalak Festival",
+   "by": "Hydztemple",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:The_Dreamweaver,_Tnalak_Festival.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f154713989-960.webp",
+   "files": [
+    "photo-f154713989-500.webp",
+    "photo-f154713989-960.webp"
+   ],
+   "id": "f154713989",
+   "alt": "Candon Inabel cotton loom weavingA",
+   "by": "Unknown author",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Candon_Inabel_cotton_loom_weavingA.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f185334698.webp",
+   "files": [
+    "photo-f185334698-500.webp",
+    "photo-f185334698-960.webp",
+    "photo-f185334698.webp"
+   ],
+   "id": "f185334698",
+   "alt": "5-gong Kulintang",
+   "by": "Buszmail",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:5-gong_Kulintang.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f82346812.webp",
+   "files": [
+    "photo-f82346812-500.webp",
+    "photo-f82346812-960.webp",
+    "photo-f82346812.webp"
+   ],
+   "id": "f82346812",
+   "alt": "Manunggul Jar displayed at Philippine National Museum of Anthropology",
+   "by": "Julan Shirwod Nueva",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Manunggul_Jar_displayed_at_Philippine_National_Museum_of_Anthropology.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f155037093.webp",
+   "files": [
+    "photo-f155037093-500.webp",
+    "photo-f155037093-960.webp",
+    "photo-f155037093.webp"
+   ],
+   "id": "f155037093",
+   "alt": "Maranao Baur chest LanaoG",
+   "by": "Unknown author",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Maranao_Baur_chest_LanaoG.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f146938627.webp",
+   "files": [
+    "photo-f146938627-500.webp",
+    "photo-f146938627-960.webp",
+    "photo-f146938627.webp"
+   ],
+   "id": "f146938627",
+   "alt": "Burnayan Pottery making of Vigan",
+   "by": "Ranieljosecastaneda",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Burnayan_Pottery_making_of_Vigan.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f154924372-960.webp",
+   "files": [
+    "photo-f154924372-500.webp",
+    "photo-f154924372-960.webp"
+   ],
+   "id": "f154924372",
+   "alt": "Piña Barong tagalog AklanA",
+   "by": "Unknown author",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Pi%C3%B1a_Barong_tagalog_AklanA.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f8265183.webp",
+   "files": [
+    "photo-f8265183-500.webp",
+    "photo-f8265183-960.webp",
+    "photo-f8265183.webp"
+   ],
+   "id": "f8265183",
+   "alt": "Vigan Calle Crisologo 1",
+   "by": "Simon Burchell",
+   "licence": "CC BY-SA 3.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Vigan_Calle_Crisologo_1.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f201577316.webp",
+   "files": [
+    "photo-f201577316-500.webp",
+    "photo-f201577316-960.webp",
+    "photo-f201577316.webp"
+   ],
+   "id": "f201577316",
+   "alt": "Looms 2026-10-04 Ilocos Norte",
+   "by": "P1898",
+   "licence": "CC BY 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Looms_2026-10-04_Ilocos_Norte.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f60840588-960.webp",
+   "files": [
+    "photo-f60840588-500.webp",
+    "photo-f60840588-960.webp"
+   ],
+   "id": "f60840588",
+   "alt": "Ifugao house",
+   "by": "Ma. Yohana R. Frias",
+   "licence": "CC BY 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Ifugao_house.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f133469177.webp",
+   "files": [
+    "photo-f133469177-500.webp",
+    "photo-f133469177-960.webp",
+    "photo-f133469177.webp"
+   ],
+   "id": "f133469177",
+   "alt": "Artisans at work (traditions Filipino Heritage) 01",
+   "by": "SJasminum",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Artisans_at_work_(traditions_Filipino_Heritage)_01.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f154542548.webp",
+   "files": [
+    "photo-f154542548-500.webp",
+    "photo-f154542548-960.webp",
+    "photo-f154542548.webp"
+   ],
+   "id": "f154542548",
+   "alt": "Burnay",
+   "by": "JeanneKikoy",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Burnay.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f132777784-960.webp",
+   "files": [
+    "photo-f132777784-500.webp",
+    "photo-f132777784-960.webp"
+   ],
+   "id": "f132777784",
+   "alt": "Pahiyas Festival 2023 parade Plaridel (Lucban, Quezon; 05-14-2023)",
+   "by": "Patrickroque01",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Pahiyas_Festival_2023_parade_Plaridel_(Lucban,_Quezon;_05-14-2023).jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f61364006-960.webp",
+   "files": [
+    "photo-f61364006-500.webp",
+    "photo-f61364006-960.webp"
+   ],
+   "id": "f61364006",
+   "alt": "Fiber abaca bohol bee farm 887",
+   "by": "Øyvind Holmstad",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Fiber_abaca_bohol_bee_farm_887.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f27708052.webp",
+   "files": [
+    "photo-f27708052-500.webp",
+    "photo-f27708052-960.webp",
+    "photo-f27708052.webp"
+   ],
+   "id": "f27708052",
+   "alt": "Abaca Fiber",
+   "by": "Rockwurm",
+   "licence": "CC BY-SA 3.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Abaca_Fiber.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f192078466.webp",
+   "files": [
+    "photo-f192078466-500.webp",
+    "photo-f192078466-960.webp",
+    "photo-f192078466.webp"
+   ],
+   "id": "f192078466",
+   "alt": "Pahiyas Festival Lucban, Quezon May 14 2026 Kiping Decoration Preparation",
+   "by": "Magicsdcar",
+   "licence": "CC BY 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Pahiyas_Festival_Lucban,_Quezon_May_14_2026_Kiping_Decoration_Preparation.jpg",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f31387563.webp",
+   "files": [
+    "photo-f31387563-500.webp",
+    "photo-f31387563-960.webp",
+    "photo-f31387563.webp"
+   ],
+   "id": "f31387563",
+   "alt": "The picturesque view of Lake Sebu.",
+   "by": "GinaD",
+   "licence": "CC BY-SA 3.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+   "page": "https://commons.wikimedia.org/wiki/File:The_picturesque_view_of_Lake_Sebu..JPG",
+   "source": "Wikimedia Commons"
+  },
+  {
+   "file": "photo-f149179498.webp",
+   "files": [
+    "photo-f149179498-500.webp",
+    "photo-f149179498-960.webp",
+    "photo-f149179498.webp"
+   ],
+   "id": "f149179498",
+   "alt": "Lake Sebu Sunset",
+   "by": "Southlens62",
+   "licence": "CC BY-SA 4.0",
+   "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "page": "https://commons.wikimedia.org/wiki/File:Lake_Sebu_Sunset.jpg",
+   "source": "Wikimedia Commons"
+  }
+ ]
+}
