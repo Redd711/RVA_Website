@@ -4,6 +4,8 @@
 // hall slides sideways only as the visitor scrolls. arts.html#<piece> opens the hall at that piece.
 import { mountScene, textVox, flatGround, mod, along, THREE, Vox } from './hero-stage.js';
 import { hash3, rng, meshVox } from './voxel-kit.js';
+import { canWalk, walker } from './walk.js';
+import { walkSound, VOICES } from './walk-sound.js';
 import * as M from './models.js';
 
 const { C, COSTUMES: K } = M;
@@ -124,12 +126,15 @@ async function museumPlaza(canvas, after) {
       mat.lathe(2, -1, 1, [1.6, 2, 2], C.bamboo, 2);
       mat.set(-2, 1, 1, C.red); mat.set(-1, 1, 1, C.yellow); mat.set(-2, 1, 0, 0x8aa646);
       S.add(mat, { at: [36, -0.6, 26], jitter: 0.05 });
+      // people are flagged as moving, so a walker meets them where they are (js/walk.js)
       for (const [dx, dz, dir, k] of [[-4, -6, 0, K.saya], [6, -1, -Math.PI / 2, K.barong], [-3, 6, Math.PI, K.reveler]]) {
         const p = S.add(M.personSitting(k(140 + dx)), { at: [36 + dx, 0, 26 + dz], rot: dir });
+        p.userData.moves = true;
         idle.push([p, p.position.y, dz]);
       }
       for (const [x, z, k] of [[-10, 28, K.farmer], [8, 28, K.maranao]]) {
         const p = S.add(M.person(k(150 + x)), { at: [x, 0, z], rot: Math.PI });
+        p.userData.moves = true;
         idle.push([p, 0, x]);
       }
 
@@ -137,6 +142,7 @@ async function museumPlaza(canvas, after) {
       const dress = [K.barong, K.saya, K.reveler, K.farmer, K.maranao, K.tboli, K.kadayawan];
       for (let i = 0; i < 12; i++) {
         const mesh = S.add(M.person(dress[i % dress.length](100 + i)), { at: [0, 0, 0] });
+        mesh.userData.moves = true;
         mesh.scale.setScalar(0.0001);
         const w = { mesh, speed: 4.5 + rand() * 2, pause: 0 };
         setRoute(w, routes[['enter', 'exit', 'pond'][i % 3]]());
@@ -167,7 +173,40 @@ async function museumPlaza(canvas, after) {
     },
     after: (a) => after?.(a, groups),
   });
-  return api;
+  return { ...api, people: [...folk.map((w) => w.mesh), ...idle.map(([p]) => p)] };
+}
+
+// ---------------------------------------------------------------- on foot
+// In from the front path, facing the pond and the Textile museum. Textile plays the T'boli music and
+// Brass the kulintang (the Overview's Lake Sebu and Lake Lanao); Clay is quiet. The visitors talk, each
+// in the language of one of the town's corners. Up a museum's steps and through its door, the walk ends
+// and the page scrolls to that museum's pieces in the hall.
+function onFoot(plaza, root, enter) {
+  const sets = Object.keys(VOICES), rand = rng(23);
+  const talkers = () => plaza.people.map((mesh) => ({ mesh, lang: sets[Math.floor(rand() * sets.length)] }));
+  const [tx, tz] = local(MUSEUMS[0], 0, 8), [bx, bz] = local(MUSEUMS[2], 25, 12);
+  const loops = [
+    { name: 'tboli', db: -3, ref: 18, far: 95, at: [tx, 8, tz] },
+    { name: 'kulintang', db: -1, ref: 16, far: 95, at: [bx, 8, bz] },
+  ];
+  const feet = walker(plaza, root, {
+    place: 'plaza',
+    bounds: [-198, -118, 198, 178],
+    spawn: { at: [8, 120], yaw: 0 },   // on the lawn beside the path, out of the visitors' way
+    home: { pos: [0, 30, 170], look: [0, 17, -20] },
+    people: () => plaza.people,
+    blocked: (x, z) => (x / (POND.rx + 1.2)) ** 2 + ((z - RING.z) / (POND.rz + 1.2)) ** 2 < 1,   // the pond
+    sound: walkSound(plaza, { loops, people: talkers }),
+    // through a door: on the podium, between the two middle columns, with the door just behind them
+    reach: (x, z, f) => {
+      if (f < 2.5) return;
+      for (const m of MUSEUMS) {
+        const dx = x - m.at[0], dz = z - m.at[1], c = Math.cos(m.rot), s = Math.sin(m.rot);
+        if (Math.abs(dx * c - dz * s) < 3.5 && dx * s + dz * c < 3) { feet.leave({ fly: false }); enter(m.id); return; }
+      }
+    },
+  });
+  return feet;
 }
 
 // ---------------------------------------------------------------- the hall
@@ -339,7 +378,23 @@ if (plaza) {
     }
   };
   doors.forEach((d) => d.addEventListener('click', () => goTo(WINGS[d.dataset.museum].first)));
-  museumPlaza(plaza.querySelector('canvas'), place).then((api) => { plaza.classList.add('is-live'); api.play(); }).catch(() => plaza.classList.add('is-still'));
+
+  // on a computer the hero's button walks you through the plaza; on a phone it stays the link to the
+  // hall. data-walk holds the button's words for the walk
+  const go = plaza.querySelector('[data-walk]');
+  let walkable = canWalk, feet = null;
+  const label = () => { go.dataset.link ??= go.textContent; go.textContent = walkable ? go.dataset.walk : go.dataset.link; };
+  label();
+  go.addEventListener('click', (e) => {
+    if (!walkable) return;
+    e.preventDefault();
+    feet?.start(go);
+  });
+  museumPlaza(plaza.querySelector('canvas'), place).then((api) => {
+    plaza.classList.add('is-live');
+    api.play();
+    if (walkable) window.__feet = feet = onFoot(api, plaza, (id) => goTo(WINGS[id].first));   // the global is for tests
+  }).catch(() => { plaza.classList.add('is-still'); walkable = false; label(); });
 }
 
 if (hall && viewer) {

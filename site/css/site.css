@@ -204,6 +204,20 @@ button.link { border: 0; padding: 10px 0; font: inherit; font-weight: 500; curso
   .vhero__cue { bottom: calc(80px + env(safe-area-inset-bottom)); }
 }
 
+/* ---------- on foot (js/walk.js): the hero fills the window, the page waits behind it ---------- */
+html.is-afoot { overflow: hidden; }
+.vhero.is-afoot { position: fixed; inset: 0; z-index: 60; height: auto; min-height: 0; }
+.vhero.is-afoot::before, .is-afoot > :is(.vhero__motto, .vhero__panel, .vhero__cue, .town__pins, .plaza__doors) { display: none; }
+.walk { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.walk[hidden] { display: none; }
+.walk :is(button, .walk__menu) { pointer-events: auto; }
+.walk__hint { position: absolute; left: 50%; bottom: 24px; translate: -50% 0; width: max-content; max-width: min(640px, 100% - 2 * var(--edge) - 380px);
+  margin: 0; padding: 10px 16px; border-radius: var(--r-s); background: rgb(27 39 66 / .72); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  color: var(--banig); font-size: var(--t-small); font-weight: 500; text-align: center; transition: opacity var(--d-slow) var(--ease-out); }
+.walk.is-quiet .walk__hint { opacity: 0; }
+.walk .walk__sound { left: auto; right: max(var(--edge), (100% - var(--wrap)) / 2); }   /* the menu takes the bottom left */
+.walk__menu > p { color: var(--hamog); font-size: 1rem; }
+
 /* ---------- inner-page sections: as tall as what they hold, no empty screen under the cards ---------- */
 .screen { padding: clamp(96px, 12vh, 128px) 0 clamp(80px, 10vh, 112px); }
 .split-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 var(--gut); align-items: end; }

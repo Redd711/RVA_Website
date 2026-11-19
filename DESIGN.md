@@ -408,6 +408,23 @@ up. Sound fades out when the world leaves the screen or the tab is hidden.
   code as well, since we found no openly licensed recording: a row of eight bossed gongs in a
   pentatonic-like tuning, a hanging agung, the babendir keeping time and the dbakan, each struck as
   decaying partials and played in a looping rhythmic mode.
+- **On foot (Traditions, Arts; `js/walk-sound.js`).** Walking the town or the plaza (8.6) has a sound
+  of its own, the same way built: the listener rides the walker's eyes, each source is a
+  `PositionalAudio` with HRTF panning, full within its reach, -6 dB per doubling past it, gone by its
+  far edge, darker as it recedes. In the town each corner plays its Overview recording from the
+  middle of its plaza (reach 22, gone by 110, so a road between two corners hears both); the calesa's
+  hooves ride the calesa. On the plaza the T'boli music plays at the Textile museum and the kulintang
+  by the Brass museum's agung; Clay is quiet. Birds sit under everything, quiet. Sound starts with the
+  click on the walk button and stops when the walk ends; *Turn off sound* (and M) mutes it.
+- **Voices.** The people talk now and then, in phrases of one to four seconds, at most three at once,
+  each from the person speaking: in the town in their corner's language (the walkers on the road in
+  their home corner's), on the plaza each visitor in one of the town's. Only real recordings of people
+  talking, never sound made in code. Where we found no openly licensed recording in a place's own
+  language, a language people there also speak stands in and the credits say so: Tagalog for the
+  Ilocano of Vigan. Pahiyas has Tagalog (two women talking about a video); Banaue has the performers
+  of a Banaue dance group talking between dances (Whisper places it in no language it knows, which fits
+  Ifugao; a speaker should confirm). Sinulog and Kadayawan (Cebuano) and Ati-Atihan (Hiligaynon,
+  standing in for Aklanon) wait on readings from Wikimedia Commons.
 
 ---
 
@@ -487,6 +504,19 @@ others rest at 38%.
   that swaps in the real photograph; and a museum label: the museum, the name, the maker, the medium
   in italic, the date, then the curator's note. Only facts we can source: no measurements or
   catalogue numbers.
+- **On foot (Traditions, Arts; `js/walk.js`).** On a computer with a mouse, the town panel's first
+  button reads *Travel the festive town* and the plaza's *Walk through the plaza*; on a phone or tablet
+  they stay *See the festival year* and *Walk through the hall*, links as before (`data-walk` holds the
+  walk's words). The click locks the mouse, the hero fills the window and the camera swoops down to eye
+  level (10.5, a person being 12): on the road before the Pahiyas gate, or on the lawn beside the
+  plaza's path. W A S D or the arrows walk, Shift runs, Space jumps, the mouse looks; a line of keys
+  shows at the bottom and steps back after a few seconds. Esc opens a menu bottom left (*Keep walking*,
+  *Leave the town*); Esc again leaves, and the camera flies back up. The ground and the walls are the
+  scene's own voxels, so steps, the museum podiums and the Banaue terraces climb (a jump clears the
+  terraces' lip), houses and walls stop you, a gateway's beam passes overhead; people and animals
+  nudge you aside; the pond and the edge of the ground stop you. On the plaza, up a museum's steps and
+  between its middle columns, the walk ends and the page scrolls to that museum's pieces in the hall.
+  Where the browser refuses the mouse lock, dragging looks instead.
 - **The five of us (Members).** Each figure is its own model (`MEMBERS` in `js/models.js`), a
   placeholder in that member's thread colour until it is rebuilt from the member's reference
   photograph. A clear button over each one; picked, a panel bottom left gives the role, the name and
@@ -604,7 +634,11 @@ Each story cites its sources at the end and says where sources disagree.
 - Without WebGL the poster and the list map remain; story pages fall back to text and photos; the
   town panel lists its corners as links, the hall becomes a list of pieces, and the viewer shows the
   photograph in place of the model.
-- Reduced motion per 7.5. The page never takes over scrolling.
+- On foot (8.6): only on a computer with a mouse, and only on request; the keys and Esc are written on
+  screen; the page behind is inert while walking, so Tab stays in the menu; leaving hands focus back to
+  the walk button. Everything the walk shows is also on the page.
+- Reduced motion per 7.5. The page never takes over scrolling (except while walking, which the
+  visitor starts and ends).
 - Every page works at 375, 768, 1024 and 1440px.
 
 ---
@@ -622,6 +656,9 @@ Each story cites its sources at the end and says where sources disagree.
   lamp is still easing. Arts holds three WebGL contexts at most (plaza, hall, viewer).
 - Sound loads once the world is up: about 3 MB of MP3 loops and one-shots. Loops far from
   the camera stop, and the audio context sleeps when the world is off screen or the tab is hidden.
+- A walk (8.6) loads its sound on the click: the town about 1.9 MB of loops, the plaza about 0.9 MB,
+  and both the same 0.3 MB of voices. Its collision grid (one-unit cells, 64 slices each, two 32-bit words) is built
+  once, at the first walk, from the scene's voxels.
 
 ---
 
@@ -680,11 +717,14 @@ Take each at 1440×900 unless noted. Links with `?p=…&place=…` open a given 
 | `site/js/places.js` | The map's places, regions, landmarks, the first frame, the end of the flight and the scroll budget |
 | `site/js/overview.js` | Scroll, pins, chips, dossier, the sound chip and fallbacks on the Overview |
 | `site/js/sound.js` | The Overview's sound (7.6): beds, positional sources, the whoosh and the bell |
+| `site/js/sound-files.js` | The recordings' folder and loop lengths, shared by `sound.js` and `walk-sound.js` |
+| `site/js/walk.js` | On foot through the town and the plaza (8.6): keys, mouse lock, the voxel collision grid, the menu |
+| `site/js/walk-sound.js` | The walks' sound (7.6): each place's recording where it stands, and the voices |
 | `site/assets/sound/` | The recordings, cut into seamless loops and one-shots (credits in `credits.html`) |
 | `site/js/lifecycle.js`, `stories.js`, `story.js` | The story stage engine, the 19 stages, and the page controller (the Arts viewer reuses the stage) |
 | `site/js/hero-stage.js` | The inner pages' voxel hero stage: light, sky, words as voxels, woven signs, the fly-to camera |
-| `site/js/traditions.js` | The festival town: its six corners, the signs, the fly-in and the panel |
-| `site/js/arts.js` | The museum plaza, the hall with its lamps, and the piece viewer |
+| `site/js/traditions.js` | The festival town: its six corners, the signs, the fly-in, the panel and the walk's sounds |
+| `site/js/arts.js` | The museum plaza (and its walk), the hall with its lamps, and the piece viewer |
 | `site/js/members.js` | *Kami* in the sea and the five of us on the shore |
 | `video/` | HyperFrames project: a 14 s teaser (first frame → journey → weave → map → logo) rendered from the same world and the same scroll budget; also the source of the hero poster |
 

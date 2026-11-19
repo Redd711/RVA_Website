@@ -5,6 +5,8 @@
 // never moves on its own. ?t=<id> opens a corner directly, for screenshots and links.
 import { mountScene, wovenSign, flatGround, bunting, face, mod, along, Vox } from './hero-stage.js';
 import { hash3, rng } from './voxel-kit.js';
+import { canWalk, walker } from './walk.js';
+import { walkSound } from './walk-sound.js';
 import * as M from './models.js';
 
 const { C, COSTUMES: K } = M;
@@ -30,12 +32,25 @@ export const near = (id) => {
   return { pos: [x, foot + 2, z + 108], look: [x, foot - 9, z - 30] };
 };
 
-// little motions for the people who stay in their corner
+// how each corner sounds on foot: its recording on the Overview's mark, and whose voices (js/walk-sound.js)
+const SOUNDS = {
+  sinulog: { loop: 'sinulog', db: -2, voices: 'sinulog' },
+  pahiyas: { loop: 'pahiyas', db: 0, voices: 'pahiyas' },
+  kadayawan: { loop: 'kadayawan', db: -4, voices: 'kadayawan' },
+  'ati-atihan': { loop: 'ati', db: -2, voices: 'ati' },
+  vigan: { loop: 'calesa', db: -9, voices: 'vigan' },   // the calesa's hooves follow the calesa
+  terraces: { loop: 'banaue', db: -4, voices: 'banaue' },
+};
+
+// little motions for the people who stay in their corner; whatever moves is flagged, so a walker
+// collides with it where it is now, not where it started (js/walk.js)
 const life = [];
-const hop = (mesh, amp, speed, phase = 0) => { const y = mesh.position.y; life.push((t) => { mesh.position.y = y + Math.abs(Math.sin(t * speed + phase)) * amp; }); };
-const sway = (mesh, amp, speed, phase = 0) => { const r = mesh.rotation.y; life.push((t) => { mesh.rotation.y = r + Math.sin(t * speed + phase) * amp; }); };
+const moving = (mesh) => { mesh.userData.moves = true; return mesh; };
+const hop = (mesh, amp, speed, phase = 0) => { moving(mesh); const y = mesh.position.y; life.push((t) => { mesh.position.y = y + Math.abs(Math.sin(t * speed + phase)) * amp; }); };
+const sway = (mesh, amp, speed, phase = 0) => { moving(mesh); const r = mesh.rotation.y; life.push((t) => { mesh.rotation.y = r + Math.sin(t * speed + phase) * amp; }); };
 // back and forth along a line, turning at each end (a carabao, a calesa, a farmer on a terrace)
 const pace = (mesh, [x0, z0], [x1, z1], speed, phase = 0) => {
+  moving(mesh);
   const len = Math.hypot(x1 - x0, z1 - z0), out = Math.atan2(x1 - x0, z1 - z0);
   life.push((t) => {
     const u = ((t * speed + phase * len) / len) % 2, k = u < 1 ? u : 2 - u, s = k * k * (3 - 2 * k);
@@ -52,7 +67,7 @@ const BUILD = {
     hop(nino, 0.3, 3);
     // the ring dances round the Santo Nino: two steps forward and one back, like a river's current
     for (let i = 0; i < 8; i++) {
-      const m = S.add(M.person({ ...K.sinulog(i + 4), arms: i % 2 ? 'up' : 'out' }), { at: [x, 0, z - 24] });
+      const m = moving(S.add(M.person({ ...K.sinulog(i + 4), arms: i % 2 ? 'up' : 'out' }), { at: [x, 0, z - 24] }));
       const a0 = (i / 8) * Math.PI * 2;
       life.push((t) => {
         const a = a0 + t * 0.32 + Math.sin(t * 4.2) * 0.07;
@@ -70,7 +85,9 @@ const BUILD = {
     const flags = new Vox();
     for (const dz of [-8, -24, -40]) bunting(flags, x - 9, x + 9, 17, z + dz, dz);
     S.add(flags, { shadow: false });
-    pace(S.add(M.carabao(), { at: [x, 0, z - 34] }), [x, z - 48], [x, z - 18], 1.2);
+    const carabao = S.add(M.carabao(), { at: [x, 0, z - 34] });
+    carabao.userData.radius = 3;   // an animal or a cart: wider than a person, and it does not talk
+    pace(carabao, [x, z - 48], [x, z - 18], 1.2);
     [[-4, -14], [4, -20], [-3, -46], [3, -50]].forEach(([dx, dz], i) => {
       const m = S.add(M.person({ ...K.farmer(30 + i), hold: i % 2 ? 'basket' : null, arms: i % 2 ? 'up' : 'down' }), { at: [x + dx, 0, z + dz] });
       hop(m, 0.4, 3.4, i); sway(m, 0.4, 1.1, i);
@@ -96,7 +113,10 @@ const BUILD = {
       S.add(face(M.bahayNaBato(i + 2), '+x'), { at: [x - 15, 0, z + dz] });
       S.add(face(M.bahayNaBato(i + 9), '-x'), { at: [x + 15, 0, z + dz - 2] });
     });
-    pace(S.add(M.calesa(), { at: [x - 2, 0, z - 26] }), [x - 2, z - 58], [x - 2, z - 10], 3.2);
+    const calesa = S.add(M.calesa(), { at: [x - 2, 0, z - 26] });
+    calesa.userData.radius = 4;
+    calesa.name = 'calesa';
+    pace(calesa, [x - 2, z - 58], [x - 2, z - 10], 3.2);
     [[5, -14, K.barong], [-5, -40, K.saya], [4, -46, K.barong]].forEach(([dx, dz, k], i) => {
       pace(S.add(M.person(k(70 + i)), { at: [x + dx, 0, z + dz] }), [x + dx, z + dz], [x + dx, z + dz - 14], 1.6, i * 0.5);
     });
@@ -140,7 +160,7 @@ function walkers(S) {
   IDS.forEach((home, h) => {
     for (let k = 0; k < 3; k++) {
       const dress = CORNERS[home].dress[k % 2];
-      const mesh = S.add(M.person(dress(300 + h * 10 + k)), { at: [0, 0, 0] });
+      const mesh = moving(S.add(M.person(dress(300 + h * 10 + k)), { at: [0, 0, 0] }));
       mesh.scale.setScalar(0.0001);   // hidden until its first step
       const w = { home, at: home, mesh, path: null, d: 0, speed: 5 + rand() * 2.5, wait: rand() * 6 };
       // start some already on the road, so the town is busy from the first frame
@@ -148,7 +168,7 @@ function walkers(S) {
       list.push(w);
     }
   });
-  return (t, dt) => {
+  return Object.assign((t, dt) => {
     for (const w of list) {
       if (!w.path) {   // inside a corner, resting
         w.mesh.scale.setScalar(0.0001);
@@ -163,11 +183,11 @@ function walkers(S) {
       w.mesh.scale.setScalar(Math.max(0.0001, edge));
       if (w.d >= p.total) { w.at = w.path.to; w.path = null; w.wait = 3 + rand() * 7; }
     }
-  };
+  }, { list });
 }
 
 export async function festivalTown(canvas, { after } = {}) {
-  const signs = {};
+  const signs = {}, folk = {};   // folk: the things that move in each corner, its people among them
   let walk = null;
   const birds = [], clouds = [];
   const api = await mountScene(canvas, {
@@ -184,7 +204,9 @@ export async function festivalTown(canvas, { after } = {}) {
       S.add(ground(), { at: [0, -2, 0], size: 2, shadow: false, jitter: 0.05 });   // two-unit cells: top at y 0
       for (const [id, c] of Object.entries(CORNERS)) {
         const [x, z] = c.at;
+        const n = S.scene.children.length;
         BUILD[id](S, x, z);
+        folk[id] = S.scene.children.slice(n).filter((m) => m.userData.moves);
         // the gateway: two bamboo posts dressed in gold, a beam, the woven sign hanging from it
         const sign = await wovenSign(c.lines, { px: 26, border: c.border });
         const w = sign.w * SIGN, h = sign.h * SIGN, foot = c.foot ?? 21, top = foot + h;
@@ -209,8 +231,8 @@ export async function festivalTown(canvas, { after } = {}) {
       for (const [x, z, s] of [[40, 52, 1], [96, 64, 2], [150, 46, 3], [-160, 60, 4], [10, 86, 5]]) S.add(s % 2 ? M.palm(s) : M.roundTree(s), { at: [x, 0, z], size: 1.8 });
       walk = walkers(S);
       // birds circling over the town, clouds drifting past
-      for (let i = 0; i < 7; i++) birds.push(S.add(M.bird(), { at: [0, 60, 0], size: 1.8, shadow: false }));
-      [[-120, 92, -230, 2], [40, 104, -300, 5], [190, 88, -210, 8]].forEach(([x, y, z, s]) => clouds.push(S.add(M.cloud(s), { at: [x, y, z], size: 3, shadow: false })));
+      for (let i = 0; i < 7; i++) birds.push(moving(S.add(M.bird(), { at: [0, 60, 0], size: 1.8, shadow: false })));
+      [[-120, 92, -230, 2], [40, 104, -300, 5], [190, 88, -210, 8]].forEach(([x, y, z, s]) => clouds.push(moving(S.add(M.cloud(s), { at: [x, y, z], size: 3, shadow: false }))));
     },
     tick: (t, dt) => {
       for (const f of life) f(t);
@@ -224,7 +246,32 @@ export async function festivalTown(canvas, { after } = {}) {
     },
     after: (a) => after?.(a, signs),
   });
-  return { ...api, signs };
+  return { ...api, signs, folk, walkers: walk.list };
+}
+
+// ---------------------------------------------------------------- on foot
+// The road in front of the Pahiyas gate, looking up its street; each corner's recording at the middle
+// of its plaza; everyone who stays in a corner or walks the road talks in their corner's language.
+function onFoot(town, hero) {
+  const near = (m) => m.position.y < 20;   // the birds and clouds overhead are out of reach
+  const people = [...Object.values(town.folk).flat(), ...town.walkers.map((w) => w.mesh)].filter(near);
+  const loops = Object.entries(SOUNDS).map(([id, s]) => {
+    const [x, z] = CORNERS[id].at;
+    const calesa = id === 'vigan' && town.folk.vigan.find((m) => m.name === 'calesa');
+    return calesa ? { name: s.loop, db: s.db, ref: 6, far: 50, follow: calesa } : { name: s.loop, db: s.db, ref: 22, far: 110, at: [x, 6, z - 28] };
+  });
+  const talkers = () => [
+    ...Object.entries(town.folk).flatMap(([id, ms]) => ms.filter((m) => !m.userData.radius && near(m)).map((mesh) => ({ mesh, lang: SOUNDS[id].voices }))),
+    ...town.walkers.map((w) => ({ mesh: w.mesh, lang: SOUNDS[w.home].voices })),
+  ];
+  return walker(town, hero, {
+    place: 'town',
+    bounds: [-198, -278, 198, 118],
+    spawn: { at: [7, 30], yaw: 0 },   // beside the walkers' line to the gate
+    home: WIDE,
+    people: () => people,
+    sound: walkSound(town, { loops, people: talkers }),
+  });
 }
 
 // ---------------------------------------------------------------- the page
@@ -234,7 +281,21 @@ if (hero) {
   const panel = hero.querySelector('.town__panel');
   const pins = [...hero.querySelectorAll('.town__pin')];
   const back = () => hero.querySelector('[data-back]');
-  let here = null, town = null;
+  let here = null, town = null, feet = null, walkable = canWalk;
+
+  // on a computer the town's first button walks you in; on a phone it stays the link to the year.
+  // data-walk holds the button's words for the walk
+  const label = () => panel.querySelectorAll('[data-walk]').forEach((a) => {
+    a.dataset.link ??= a.textContent;
+    a.textContent = walkable ? a.dataset.walk : a.dataset.link;
+  });
+  label();
+  panel.addEventListener('click', (e) => {
+    const a = e.target.closest('[data-walk]');
+    if (!a || !walkable) return;
+    e.preventDefault();
+    feet?.start(a);   // before the town is built, the click waits for nothing
+  });
 
   // each pin sits over its sign: at least 44px square, so a small sign is still easy to tap
   const placePins = (api, signs) => {
@@ -246,6 +307,7 @@ if (hero) {
   };
   const show = (id) => {
     panel.replaceChildren(hero.querySelector(`template[data-panel="${id ?? 'town'}"]`).content.cloneNode(true));
+    label();
     hero.dataset.here = id ?? '';
     pins.forEach((p) => p.setAttribute('aria-pressed', String(p.dataset.corner === id)));
   };
@@ -268,10 +330,11 @@ if (hero) {
     town = api;
     hero.classList.add('is-live');
     town.play();
+    if (walkable) window.__feet = feet = onFoot(town, hero);   // the global is for tests, like the Overview's __sound
     pins.forEach((p) => p.addEventListener('click', () => (here === p.dataset.corner ? home() : go(p.dataset.corner))));
     panel.addEventListener('click', (e) => { if (e.target.closest('[data-back]')) home(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && here) home(); });
     const t = new URLSearchParams(location.search).get('t');
     if (t in CORNERS) go(t, false);
-  }).catch(() => hero.classList.add('is-still'));
+  }).catch(() => { hero.classList.add('is-still'); walkable = false; label(); });
 }

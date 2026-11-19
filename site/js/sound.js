@@ -6,19 +6,14 @@
 import { THREE } from './voxel-kit.js';
 import { PLACES, LANDMARKS } from './places.js';
 import { toWorld, groundY, regionAt } from './world.js';
+import { DIR, PAD, LOOPS, dB } from './sound-files.js';
 
-const DIR = 'assets/sound/';
-const PAD = 0.1;            // each loop file carries this much of its loop on both sides (decoder offsets land inside it)
 const SEA_Y = 0.16;
-const dB = (d) => 10 ** (d / 20);
 const clamp01 = (x) => Math.min(1, Math.max(0, x));
 const smooth = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); };
 const rand = (a, b) => a + Math.random() * (b - a);
 const pick = (a) => a[Math.floor(Math.random() * a.length)];
 
-// loop lengths (s) of the files in assets/sound, as cut
-const LOOPS = { sea: 24, birds: 24, swell: 16, jeepney: 16.01, sinulog: 24.021, pahiyas: 23.6263, ati: 19.7834,
-  kadayawan: 20.1433, banaue: 24.3229, tboli: 24.172, calesa: 9.8801, kulintang: 21.8182 };
 const SHOTS = ['splash1', 'splash2', 'splash3', 'horn', 'eagle1', 'eagle2', 'eagle3', 'ding', 'whoosh'];
 
 const at = (id) => { const p = PLACES.find((q) => q.id === id) ?? LANDMARKS[id]; const v = toWorld(p.lon, p.lat); v.y = groundY(v.x, v.z) + 0.6; return v; };

@@ -163,6 +163,7 @@ export async function mountScene(canvas, opts) {
       mesh.position.set(...at);
       mesh.rotation.y = rot;
       mesh.castShadow = shadow; mesh.receiveShadow = true;
+      mesh.userData.vox = vox; mesh.userData.size = size;   // what a walker collides with (js/walk.js)
       parent.add(mesh);
       return mesh;
     },
@@ -183,12 +184,16 @@ export async function mountScene(canvas, opts) {
     cam.aspect = w / h;
     cam.updateProjectionMatrix();
   }
+  // a walker's eyes (js/walk.js): while set, pov(dt) places the camera itself each frame
+  let pov = null, fovGoal = cam.fov;
   function render() {
-    // narrow screens step back along the view, so the whole scene stays in the frame
-    const back = w / h < 1 ? (opts.phoneBack ?? 1.6) : 1;
-    cam.position.copy(view.pos).sub(view.look).multiplyScalar(back).add(view.look);
-    if (opts.fog) { scene.fog.near = opts.fog[0] * back; scene.fog.far = opts.fog[1] * back; }   // the haze steps back with it
-    cam.lookAt(view.look);
+    if (!pov) {
+      // narrow screens step back along the view, so the whole scene stays in the frame
+      const back = w / h < 1 ? (opts.phoneBack ?? 1.6) : 1;
+      cam.position.copy(view.pos).sub(view.look).multiplyScalar(back).add(view.look);
+      if (opts.fog) { scene.fog.near = opts.fog[0] * back; scene.fog.far = opts.fog[1] * back; }   // the haze steps back with it
+      cam.lookAt(view.look);
+    }
     renderer.render(scene, cam);
     opts.after?.(api);
   }
@@ -209,8 +214,10 @@ export async function mountScene(canvas, opts) {
       if (k >= 1) { flight = null; f.done(true); }
     }
     opts.tick?.(clock, dt, api);
+    if (Math.abs(cam.fov - fovGoal) > 0.01) { cam.fov += (fovGoal - cam.fov) * (1 - Math.exp(-dt * 5)); cam.updateProjectionMatrix(); }
+    pov?.(dt);
     render();
-    if (flight || (playing && onScreen && !document.hidden)) raf = requestAnimationFrame(loop);
+    if (flight || pov || (playing && onScreen && !document.hidden)) raf = requestAnimationFrame(loop);
     else last = 0;
   }
   const wake = () => { if (!raf) raf = requestAnimationFrame(loop); };
@@ -238,6 +245,10 @@ export async function mountScene(canvas, opts) {
     },
     // jump the camera (no flight): a deep link, or a reload in the middle of a visit
     jump(to) { view.pos.set(...to.pos); view.look.set(...to.look); render(); },
+    // hand the camera to a walker (fn(dt) places it every frame), or take it back (null)
+    walk(fn) { pov = fn; wake(); },
+    // ease the lens to a new field of view (degrees)
+    fov(deg) { fovGoal = deg; wake(); },
     // the swoosh: an arc up and over, eased in and out (DESIGN.md 7.1); a new flight cancels the last
     flyTo(to, ms = 1800) {
       flight?.done(false);
