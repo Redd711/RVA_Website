@@ -414,7 +414,8 @@ up. Sound fades out when the world leaves the screen or the tab is hidden.
   far edge, darker as it recedes. In the town each corner plays its Overview recording from the
   middle of its plaza (reach 22, gone by 110, so a road between two corners hears both); the calesa's
   hooves ride the calesa. On the plaza the T'boli music plays at the Textile museum and the kulintang
-  by the Brass museum's agung; Clay is quiet. Birds sit under everything, quiet. Sound starts with the
+  by the Brass museum's agung; Clay is quiet. Birds sing quietly under everything (0.07), in spells of 6
+  to 14 seconds with rests as long, so they are heard about half the time. Sound starts with the
   click on the walk button and stops when the walk ends; *Turn off sound* (and M) mutes it.
 - **Voices.** The people talk now and then, in phrases of one to four seconds, at most three at once,
   each from the person speaking: in the town in their corner's language (the walkers on the road in

@@ -17,7 +17,8 @@ export const VOICES = {
 
 const VOICE = { db: 1, ref: 5, far: 46 };    // a person talking: beside you, a touch over the band behind them
 const SLOTS = 3;                             // at most this many people talk at once
-const BIRDS = 0.1;                           // the birds overhead, everywhere, quiet
+const BIRDS = 0.07;                          // the birds overhead, everywhere, quiet
+const SPELL = [6, 14];                       // they sing for this long (s), then rest as long: heard half the time
 const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 const rand = (a, b) => a + Math.random() * (b - a);
 
@@ -53,8 +54,8 @@ export function walkSound(stage, { loops = [], people = () => [] }) {
     };
     ems = loops.map((l) => ({ ...l, ...emitter() }));
     slots = Array.from({ length: SLOTS }, () => ({ ...emitter(), who: null, until: 0 }));
-    birds = { g: ctx.createGain(), src: null };
-    birds.g.gain.value = BIRDS;
+    birds = { g: ctx.createGain(), src: null, singing: false, until: 0 };
+    birds.g.gain.value = 0;
     birds.g.connect(listener.getInput());
   }
 
@@ -99,6 +100,11 @@ export function walkSound(stage, { loops = [], people = () => [] }) {
     if (!on || ctx.state !== 'running') return;
     const now = ctx.currentTime;
     birds.src ??= loopOn('birds', birds.g);
+    if (now >= birds.until) {   // a spell of song, then a rest, swelling in and out
+      birds.singing = !birds.singing;
+      birds.until = now + rand(...SPELL);
+      glide(birds.g.gain, birds.singing ? BIRDS : 0, 1.2);
+    }
     for (const e of ems) {
       if (e.follow) e.pa.position.set(e.follow.position.x, 6, e.follow.position.z);
       else e.pa.position.set(...e.at);
@@ -139,6 +145,6 @@ export function walkSound(stage, { loops = [], people = () => [] }) {
     setMuted(m) { muted = m; if (ctx) master(); },
     // for listening tests and the console
     info: () => ctx && { state: ctx.state, loaded: Object.keys(buffers), on: ems.filter((e) => (e.pa.gain.gain._v ?? 0) > 1e-3).map((e) => `${e.name} ${(20 * Math.log10(e.pa.gain.gain._v)).toFixed(1)} dB`),
-      talking: slots.filter((s) => s.who).length },
+      talking: slots.filter((s) => s.who).length, birds: birds.singing },
   };
 }
